@@ -47,3 +47,20 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Ignore data files
+data/*.rda
+data/*.RData
+data/*.csv
+data/*.tsv
+data/*.tab
+data/*.txt
+data/*.xls
+data/*.xlsx
+data/*.sav
+data/*.rds
+data/*.feather
+data/*.fst
+data/*.json
+data/*.sqlite
+data/*.db
