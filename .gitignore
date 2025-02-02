@@ -64,3 +64,6 @@ data/*.fst
 data/*.json
 data/*.sqlite
 data/*.db
+
+#LLM Code
+code/python/LLM_annotation_tool.py
