@@ -44,9 +44,9 @@ def main():
     """
     try:
         # Définition des chemins relatifs
-        chemin_source = os.path.join('data', 'raw', 'subset', 'radar_subset_en.csv')
+        chemin_source = os.path.join('data', 'raw', 'subset', 'radar_subset.csv')
         chemin_sortie_dir = os.path.join('data', 'processed', 'subset')
-        chemin_sortie = os.path.join(chemin_sortie_dir, 'radar_subset_test_en.csv')
+        chemin_sortie = os.path.join(chemin_sortie_dir, 'radar_subset_test.csv')
         
         # Création du répertoire de sortie s'il n'existe pas
         if not os.path.isdir(chemin_sortie_dir):
