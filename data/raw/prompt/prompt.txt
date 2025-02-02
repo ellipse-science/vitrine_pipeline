@@ -18,7 +18,13 @@ During a Liberal cabinet retreat in Halifax last August, Prime Minister Justin T
 **Exemple de JSON :**
 
 {
-  "Themes": ["immigration", "governments_and_governance"]
+  "themes": ["immigration", "governments_and_governance"]
 }
 
 Suivre cette structure pour chaque phrases analysées. Aucun autre commentaire ou détails supplémentaires autre que la structure en JSON demandée et les catégories spécifiées ne doit être rajouté.
+
+
+**Clés JSON Attendues**
+{
+  "themes": "",
+}
