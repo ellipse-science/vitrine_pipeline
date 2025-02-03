@@ -51,7 +51,6 @@ rsconnect/
 # Ignore data files
 data/*.rda
 data/*.RData
-data/*.csv
 data/*.tsv
 data/*.tab
 data/*.txt
