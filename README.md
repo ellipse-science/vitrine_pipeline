@@ -1,8 +1,8 @@
-# vitrine_pipeline
+# Vitrine_pipeline
 
 ## Description
 
-Ce dépôt **vitrine_pipeline** vise à :
+Ce dépôt vise à :
 
 1. Créer un sous-ensemble de données à partir des extraits d’articles issus de **Radar Plus afin de tester, de comparer et de valider le dictionnaire de catégorisation actuel (12 catégories)** des annotations de LLMs locaux, un processus d'apprentissage machine basé sur [Do et al. (2022)](https://journals.sagepub.com/doi/full/10.1177/00491241221134526), et des annotations manuelles.
 2. **Utiliser un outil générique d’annotation par LLM (`llm_annotation_tool.py`) pour annoter n’importe quelle base de données SQL ou fichier CSV de façon propre est structurée** (chaque sortie est nettoyée et structurée en JSON). Il est possible de chanegr le modèle appelé (par n'importe quel modèle disponible avec Ollama), personnaliser les prompts (tant qu'il réponde à la structure attendue par le code), et configurer d’autres paramètres d’annotation.
@@ -22,15 +22,17 @@ Ce README est divisé en deux grandes parties principales :
 
 ## Table des matières
 1. [Dépendances et environnement](#dépendances-et-environnement)
-2. [Structure du projet](#structure-du-projet)
+2. [Structure du rojet](#structure-du-projet)
 3. [Installation et configuration](#installation-et-configuration)
 4. [Utilisation](#utilisation)
-   - [Partie 1 - Création d’un sous-ensemble de données pour le test de dictionnaire](#partie-1---création-dun-sous-ensemble-de-données-pour-le-test-de-dictionnaire)
-   - [Partie 2 - Annotation avec llm_annotation_tool.py](#partie-2---annotation-avec-llm_annotation_toolpy)
+   - [Partie 1 : Test et validation des 12 catégories (dictionnaire, LLM, apprentissage automatique, annotations manuelles).](#partie-1--test-et-validation-des-12-catégories-dictionnaire-llm-apprentissage-automatique-annotations-manuelles)
+   - [Partie 2 : Outil d'annotation avec llm_annotation_tool.py](#partie-2--outil-dannotation-avec-llm_annotation_toolpy)
+
+
 
 ---
 
-## Dépendances et Environnement
+## Dépendances et environnement
 
 Les principales bibliothèques (Python) requises sont :
 - **pandas**  
@@ -57,7 +59,7 @@ pip install -r requirements.txt
 
 ---
 
-## Structure du Projet
+## Structure du projet
 
 Voici la structure simplifiée du dépôt :
 
@@ -67,14 +69,17 @@ vitrine_pipeline
 ├── code
 │   ├── python
 │   │   ├── 1_subset_test_creation.py
+│   │   ├── 2_JSONL.py
 │   │   └── llm_annotation_tool.py
 │   └── r
 │       └── radar_extraction.R
 ├── data
 │   ├── processed
-│   │   └── subset
-│   │       └── radar_subset_test.csv
-│   │       └── radar_subset_test_annotated_100.csv
+│   │   ├── subset
+│   │   │   ├── radar_subset_test.csv
+│   │   │   ├── radar_subset_test_annotated_100.csv
+│   │   └── validation
+│   │       └── (JSONL générés par `2_JSONL.py`, ex. annotator_1.jsonl, etc.)
 │   └── raw
 │       ├── prompt
 │       │   └── prompt.txt
@@ -87,7 +92,15 @@ vitrine_pipeline
   - Script R pour extraire des données issues de *radar plus*, filtrer par langue, séparer en phrases, et générer des CSV (par ex. `radar_subset.csv`).
 
 - **`code/python/1_subset_test_creation.py`**  
-  - Script Python sélectionnant aléatoirement 100 phrases du csv source contenant un échantillon de 20 000 phrases (`radar_subset_en.csv`) pour générer un fichier test (`radar_subset_test.csv`).
+  - Script python sélectionnant aléatoirement 100 phrases du csv source contenant un échantillon de 20 000 phrases (`radar_subset_en.csv`) pour générer un fichier test (`radar_subset_test.csv`).
+
+- **`code/python/2_JSONL.py`**  
+Pour créer les fichiers destinés à Doccano (JSONL).  
+  - Assure une répartition 50 % EN / 50 % FR
+  - Génère 20 % de phrases communes** pour tous les annotateurs et 80 % de phrases uniques*
+  - Crée un fichier de configuration Doccano (`doccano_config.json`)  
+  - Produit un fichier JSONL par annotateur (ex. `annotator_1.jsonl`, `annotator_2.jsonl`, etc.)  
+  - Affiche un résumé statistique (répartition par langue, par label, etc.)
 
 - **`code/python/llm_annotation_tool.py`**  
   - Script Python générique pour annoter du texte avec un LLM.  
@@ -132,21 +145,32 @@ vitrine_pipeline
 
 ## Utilisation
 
-### Partie 1 : Test et validation des 12 catégories (dictionnaire, LLM, apprentissage automatique, annotations manuelles).
+### Partie 1 : Test et validation des 12 catégories (dictionnaire, LLM, apprentissage automatique, annotations manuelles)
 
-1. **Création du subset de 20 000 phrases**  
-   - À partir des données *radar plus*, exécutez le script `radar_extraction.R` :  
-     ```r
-     # Dans R:
-     source("code/r/radar_extraction.R")
-     ```
-   - Ce script lit la base (ou un fichier existant), filtre par médias anglophones/francophones, sépare en phrases, échantillonne 20 phrases, et sauvegarde le tout dans `data/raw/subset/radar_subset.csv`.
+#### 1.1. Extraire un grand sous-ensemble (20 000 phrases)
 
-2. **Création d’un sous-ensemble de test (100 phrases)**  
-     ```bash
-     python code/python/1_subset_test_creation.py
-     ```
-   - Par défaut, le code lit `data/raw/subset/radar_subset.csv` et écrit 100 phrases aléatoires dans `data/processed/subset/radar_subset_test.csv`.
+- **But** : Générer un fichier `radar_subset.csv` de 20 000 phrases (10 000 anglophones + 10 000 francophones) depuis *radar plus*.  
+- **Script** : `code/r/radar_extraction.R`.  
+  ```r
+  # Dans R:
+  source("code/r/radar_extraction.R")
+  ```
+
+#### 1.2. Créer un sous-ensemble de test (100 phrases)
+
+- **But** : Obtenir un échantillon restreint pour tester rapidement le dictionnaire et comparer manuellement ou avec différents LLMs.  
+- **Script** : `code/python/1_subset_test_creation.py`.  
+  ```bash
+  python code/python/1_subset_test_creation.py
+  ```
+
+#### 1.3. Générer des JSONL pour Doccano (50% EN, 50% FR)
+
+- **But** : Préparer les **fichiers JSONL** (et un fichier de config) pour **Doccano** (ou un autre outil d’annotation manuelle).  
+- **Script** : `code/python/2_JSONL.py`.  
+  ```bash
+  python code/python/2_JSONL.py
+  ```
 
 ---
 
