@@ -18,3 +18,4 @@ SQLAlchemy==2.0.37
 tqdm==4.67.1
 typing_extensions==4.12.2
 tzdata==2025.1
+pyreadr==0.5.2

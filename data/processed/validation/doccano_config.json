@@ -1,0 +1,60 @@
+{
+  "label": [
+    {
+      "label": "culture_and_nationalism",
+      "color": "#F44336"
+    },
+    {
+      "label": "economy_and_labour",
+      "color": "#E91E63"
+    },
+    {
+      "label": "education",
+      "color": "#9C27B0"
+    },
+    {
+      "label": "environment_and_energy",
+      "color": "#673AB7"
+    },
+    {
+      "label": "government_and_governance",
+      "color": "#3F51B5"
+    },
+    {
+      "label": "governments_and_governance",
+      "color": "#2196F3"
+    },
+    {
+      "label": "health_and_social_services",
+      "color": "#03A9F4"
+    },
+    {
+      "label": "immigration",
+      "color": "#00BCD4"
+    },
+    {
+      "label": "international_affairs_and_defense",
+      "color": "#009688"
+    },
+    {
+      "label": "law_and_crime",
+      "color": "#4CAF50"
+    },
+    {
+      "label": "null",
+      "color": "#8BC34A"
+    },
+    {
+      "label": "public_lands_and_agriculture",
+      "color": "#CDDC39"
+    },
+    {
+      "label": "rights_liberties_minorities_discrimination",
+      "color": "#FFC107"
+    },
+    {
+      "label": "technology",
+      "color": "#FF9800"
+    }
+  ]
+}
