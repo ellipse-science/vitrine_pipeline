@@ -25,8 +25,8 @@ Ce README est divisé en deux grandes parties principales :
 2. [Structure du projet](#structure-du-projet)
 3. [Installation et configuration](#installation-et-configuration)
 4. [Utilisation](#utilisation)
-   - [Partie 1 : Test et validation des 12 catégories (dictionnaire, LLM, apprentissage automatique, annotations manuelles)](#partie-1--création-dun-sous-ensemble-de-données-pour-le-test-de-dictionnaire)
-   - [Partie 2 : Outil d'annotation avec `llm_annotation_tool.py`](#partie-2--annotation-avec-llm_annotation_toolpy)
+   - [Partie 1 - Création d’un sous-ensemble de données pour le test de dictionnaire](#partie-1---création-dun-sous-ensemble-de-données-pour-le-test-de-dictionnaire)
+   - [Partie 2 - Annotation avec llm_annotation_tool.py](#partie-2---annotation-avec-llm_annotation_toolpy)
 
 ---
 
@@ -282,5 +282,3 @@ Si vous voulez changer le modèle **directement dans le code**, cherchez la part
 6. **Vérification**  
    - Toutes les X annotations, il affiche un exemple de JSON validé pour montrer la forme finale.  
    - S’il échoue à obtenir un JSON correct après 5 tentatives, il passe à la phrase suivante (et vous en informe).
-
-```

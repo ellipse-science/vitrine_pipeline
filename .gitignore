@@ -71,4 +71,4 @@ code/python/LLM_annotation_tool.py
 .DS_Store
 
 # Ignore readme
-README.md
+/Users/antoine/Documents/GitHub/vitrine_pipeline/README.md
