@@ -149,7 +149,7 @@ Pour créer les fichiers destinés à Doccano (JSONL).
 
 #### 1.1. Extraire un grand sous-ensemble (20 000 phrases)
 
-- **But** : Générer un fichier `radar_subset.csv` de 20 000 phrases (10 000 anglophones + 10 000 francophones) depuis *radar plus*.  
+- **But** : générer un fichier `radar_subset.csv` de 20 000 phrases (10 000 anglophones + 10 000 francophones) depuis *radar plus*.  
 - **Script** : `code/r/radar_extraction.R`.  
   ```r
   # Dans R:
@@ -270,8 +270,7 @@ et ensuite **identifie les clés** entre guillemets (`"key_name"`).
   ```
 
 - Le code va ainsi extraire automatiquement `["theme"]` comme **clé attendue**.  
-- Tout ce qui précède la section `**Clés JSON Attendues**` est considéré comme le **message principal** à donner au LLM (consignes, contexte, etc.).  
-- **Important** : la sortie **doit** respecter le format JSON pur. Aucune phrase ou commentaire ne doit se trouver hors de l’objet JSON, sinon le script va tenter de le nettoyer et recommencer.  
+- **Tout ce qui précède la section `**Clés JSON Attendues**` est considéré comme le message principal à donner au LLM (consignes, contexte, etc.).**
 
 ---
 
