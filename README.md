@@ -97,7 +97,7 @@ vitrine_pipeline
 - **`code/python/2_JSONL.py`**  
 Pour créer les fichiers destinés à Doccano (JSONL).  
   - Assure une répartition 50 % EN / 50 % FR
-  - Génère 20 % de phrases communes** pour tous les annotateurs et 80 % de phrases uniques*
+  - Génère 20 % de phrases communes pour tous les annotateurs et 80 % de phrases uniques
   - Crée un fichier de configuration Doccano (`doccano_config.json`)  
   - Produit un fichier JSONL par annotateur (ex. `annotator_1.jsonl`, `annotator_2.jsonl`, etc.)  
   - Affiche un résumé statistique (répartition par langue, par label, etc.)
