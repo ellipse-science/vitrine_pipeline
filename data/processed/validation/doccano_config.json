@@ -1,59 +1,59 @@
 {
   "label": [
     {
-      "label": "culture_and_nationalism",
+      "label": "culture_and_nationalism_body_annotated",
       "color": "#F44336"
     },
     {
-      "label": "economy_and_labour",
+      "label": "economy_and_labour_body_annotated",
       "color": "#E91E63"
     },
     {
-      "label": "education",
+      "label": "education_body_annotated",
       "color": "#9C27B0"
     },
     {
-      "label": "environment_and_energy",
+      "label": "environment_and_energy_body_annotated",
       "color": "#673AB7"
     },
     {
-      "label": "government_and_governance",
+      "label": "government_and_governance_body_annotated",
       "color": "#3F51B5"
     },
     {
-      "label": "governments_and_governance",
+      "label": "governments_and_governance_body_annotated",
       "color": "#2196F3"
     },
     {
-      "label": "health_and_social_services",
+      "label": "health_and_social_services_body_annotated",
       "color": "#03A9F4"
     },
     {
-      "label": "immigration",
+      "label": "immigration_body_annotated",
       "color": "#00BCD4"
     },
     {
-      "label": "international_affairs_and_defense",
+      "label": "international_affairs_and_defense_body_annotated",
       "color": "#009688"
     },
     {
-      "label": "law_and_crime",
+      "label": "law_and_crime_body_annotated",
       "color": "#4CAF50"
     },
     {
-      "label": "null",
+      "label": "null_body_annotated",
       "color": "#8BC34A"
     },
     {
-      "label": "public_lands_and_agriculture",
+      "label": "public_lands_and_agriculture_body_annotated",
       "color": "#CDDC39"
     },
     {
-      "label": "rights_liberties_minorities_discrimination",
+      "label": "rights_liberties_minorities_discrimination_body_annotated",
       "color": "#FFC107"
     },
     {
-      "label": "technology",
+      "label": "technology_body_annotated",
       "color": "#FF9800"
     }
   ]

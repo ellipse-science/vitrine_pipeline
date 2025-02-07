@@ -158,7 +158,7 @@ Pour créer les fichiers destinés à Doccano (JSONL).
 
 #### 1.2. Créer un sous-ensemble de test (100 phrases)
 
-- **But** : obtenir un échantillon restreint pour tester le dictionnaire et comparer avec des LLMs locaux + annotations manuelles
+- **But** : obtenir un échantillon restreint pour tester le dictionnaire et comparer avec des LLMs locaux + annotations manuelles 
 - **Script** : `code/python/1_subset_test_creation.py`.  
   ```bash
   python code/python/1_subset_test_creation.py
@@ -166,7 +166,7 @@ Pour créer les fichiers destinés à Doccano (JSONL).
 
 #### 1.3. Générer des JSONL pour Doccano (50% EN, 50% FR)
 
-- **But** : préparer les fichiers JSONL (et un fichier de config) pour Doccano (ou un autre outil d’annotation manuelle).  
+- **But** : préparer les fichiers JSONL (et un fichier de config) pour Doccano (ou un autre outil d’annotation manuelle). La composition des JSONL est de 80% d'annotations différentes, et 20% de communes si plus de de 2 annotateurs sélectionnés. 
 - **Script** : `code/python/2_JSONL.py`.  
   ```bash
   python code/python/2_JSONL.py
