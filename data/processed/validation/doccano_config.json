@@ -1,60 +1,56 @@
 {
   "label": [
     {
-      "label": "culture_and_nationalism_body_annotated",
+      "label": "culture_and_nationalism_body_annotated_deepseek_r1",
       "color": "#F44336"
     },
     {
-      "label": "economy_and_labour_body_annotated",
+      "label": "economy_and_labour_body_annotated_deepseek_r1",
       "color": "#E91E63"
     },
     {
-      "label": "education_body_annotated",
+      "label": "education_body_annotated_deepseek_r1",
       "color": "#9C27B0"
     },
     {
-      "label": "environment_and_energy_body_annotated",
+      "label": "environment_and_energy_body_annotated_deepseek_r1",
       "color": "#673AB7"
     },
     {
-      "label": "government_and_governance_body_annotated",
+      "label": "governments_and_governance_body_annotated_deepseek_r1",
       "color": "#3F51B5"
     },
     {
-      "label": "governments_and_governance_body_annotated",
+      "label": "health_and_social_services_body_annotated_deepseek_r1",
       "color": "#2196F3"
     },
     {
-      "label": "health_and_social_services_body_annotated",
+      "label": "immigration_body_annotated_deepseek_r1",
       "color": "#03A9F4"
     },
     {
-      "label": "immigration_body_annotated",
+      "label": "international_affairs_and_defense_body_annotated_deepseek_r1",
       "color": "#00BCD4"
     },
     {
-      "label": "international_affairs_and_defense_body_annotated",
+      "label": "law_and_crime_body_annotated_deepseek_r1",
       "color": "#009688"
     },
     {
-      "label": "law_and_crime_body_annotated",
+      "label": "null_body_annotated_deepseek_r1",
       "color": "#4CAF50"
     },
     {
-      "label": "null_body_annotated",
+      "label": "public_lands_and_agriculture_body_annotated_deepseek_r1",
       "color": "#8BC34A"
     },
     {
-      "label": "public_lands_and_agriculture_body_annotated",
+      "label": "rights_liberties_minorities_discrimination_body_annotated_deepseek_r1",
       "color": "#CDDC39"
     },
     {
-      "label": "rights_liberties_minorities_discrimination_body_annotated",
+      "label": "technology_body_annotated_deepseek_r1",
       "color": "#FFC107"
-    },
-    {
-      "label": "technology_body_annotated",
-      "color": "#FF9800"
     }
   ]
 }
