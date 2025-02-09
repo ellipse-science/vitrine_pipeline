@@ -37,20 +37,16 @@
       "color": "#009688"
     },
     {
-      "label": "null_body_annotated_deepseek_r1",
+      "label": "public_lands_and_agriculture_body_annotated_deepseek_r1",
       "color": "#4CAF50"
     },
     {
-      "label": "public_lands_and_agriculture_body_annotated_deepseek_r1",
+      "label": "rights_liberties_minorities_discrimination_body_annotated_deepseek_r1",
       "color": "#8BC34A"
     },
     {
-      "label": "rights_liberties_minorities_discrimination_body_annotated_deepseek_r1",
-      "color": "#CDDC39"
-    },
-    {
       "label": "technology_body_annotated_deepseek_r1",
-      "color": "#FFC107"
+      "color": "#CDDC39"
     }
   ]
 }

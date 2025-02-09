@@ -1,66 +1,107 @@
-# ---------------------------------------------------------------------------------
-# PROJET : vitrine_pipeline
-#
-# TITRE : 2_JSONL.py
-#
-# OBJECTIF PRINCIPAL :
-# ---------------------
-# Ce script génère des fichiers JSONL pour l’annotation avec Doccano en utilisant
-# un fichier CSV contenant le texte et les annotations des LLMs. Il gère deux cas :
-#   - Un seul annotateur : toutes les lignes annotées disponibles sont utilisées,
-#     sans découpage 20 % / 80 %.
-#   - Plusieurs annotateurs : 20 % des lignes sont communes à tous et 80 % sont
-#     distribuées équitablement entre eux.
-#
-# DÉPENDANCES :
-# -------------
-# - os
-# - json
-# - random
-# - math
-# - csv
-#
-# FONCTIONNALITÉS PRINCIPALES :
-# -----------------------------
-# 1) Demande à l'utilisateur le chemin du fichier CSV et le nombre d’annotateurs.
-# 2) Lit la/les colonne(s) de type JSON contenant les annotations (ex. "body_annotated",
-#    "comment_annotated", etc.), et ajoute un suffixe de colonne pour différencier les labels.
-# 3) Si plusieurs annotateurs, divise les données en 20 % communes et 80 % uniques
-#    (réparties équitablement entre eux). Si un seul annotateur, aucune division.
-# 4) Génère un fichier de configuration pour Doccano contenant tous les labels détectés.
-# 5) Crée pour chaque annotateur un fichier JSONL dans le format attendu par Doccano.
-# 6) Affiche un résumé statistique de la répartition (nombre de phrases, distribution
-#    des labels, etc.).
-#
-# Auteur :
-# ---------
-# Antoine Lemor
-# ---------------------------------------------------------------------------------
+"""
+ PROJET : vitrine_pipeline
+
+ TITRE : 2_JSONL.py
+
+ OBJECTIF PRINCIPAL :
+ ---------------------
+ Ce script génère des fichiers JSONL pour l’annotation avec Doccano en utilisant
+ un fichier CSV contenant le texte et les annotations des LLMs. Il gère deux cas :
+   - Un seul annotateur : toutes les lignes annotées disponibles sont utilisées,
+     sans découpage 20 % / 80 %.
+   - Plusieurs annotateurs : 20 % des lignes sont communes à tous et 80 % sont
+     distribuées équitablement entre eux.
+
+ DÉPENDANCES :
+ -------------
+ - os
+ - json
+ - random
+ - csv
+
+ FONCTIONNALITÉS PRINCIPALES :
+ -----------------------------
+ 1) Lister les CSV disponibles dans "data/processed/subset" et demander à 
+    l'utilisateur de sélectionner celui souhaité.
+ 2) Demander le nombre d’annotateurs (entier positif).
+ 3) Lire la/les colonne(s) de type JSON contenant les annotations (ex. "body_annotated",
+    "comment_annotated", etc.), et ajouter un suffixe de colonne pour différencier les labels.
+ 4) Demander quelles métadonnées issues du CSV original doivent figurer dans le JSONL.
+    Elles seront ajoutées sous la forme doccano_line["metadata"] = {...}.
+ 5) Si plusieurs annotateurs, diviser les données en 20 % communes et 80 % uniques,
+    réparties équitablement. Si un seul annotateur, aucune division.
+ 6) Générer un fichier de configuration Doccano (doccano_config.json) contenant
+    tous les labels détectés (après filtrage).
+ 7) Créer pour chaque annotateur un fichier JSONL dans le format attendu par Doccano
+    (ou un seul fichier si un seul annotateur).
+ 8) Afficher un résumé statistique de la répartition (nombre de phrases, distribution
+    des labels, etc.) et enregistrer ce même résumé dans un fichier CSV de log.
+
+ Auteur :
+ ---------
+ Antoine Lemor
+"""
 
 import os
 import json
 import random
 import csv
 
+def parse_themes(json_str):
+    """
+    Convertit le contenu JSON d'une cellule en une liste de thèmes.
+    Filtre ensuite les thèmes jugés indésirables :
+      - None ou 'null'
+      - Chaînes vides
+    Renvoie la liste de thèmes valides.
+    """
+    try:
+        ann_json = json.loads(json_str)
+    except json.JSONDecodeError:
+        return []
+
+    themes = ann_json.get("themes") or []
+    if not isinstance(themes, list):
+        # Au cas où "themes" ne serait pas une liste
+        return []
+
+    # Filtrer les thèmes non souhaités
+    filtered_themes = []
+    for t in themes:
+        if (t is not None 
+            and t.lower() != "null"  # Élimine "null"
+            and len(t.strip()) > 1   # Élimine chaînes d'une seule lettre ou vides
+        ):
+            filtered_themes.append(t.strip())
+
+    return filtered_themes
+
+
 def main():
     """
     Fonction principale pour orchestrer la création des fichiers JSONL et du fichier
-    de configuration Doccano.
-    
+    de configuration Doccano, en incluant les métadonnées choisies et le reporting
+    des distributions d'annotation dans un CSV.
+
     Étapes :
-        1) Demander à l'utilisateur le chemin du fichier CSV et le nombre d'annotateurs.
-        2) Lire le CSV et stocker toutes les lignes dans une structure interne.
-        3) Demander quelles colonnes contiennent les annotations JSON ("_annotated" par ex.).
-           Créer un fichier de configuration Doccano avec tous les labels détectés,
-           suffixés par le nom de la colonne.
-        4) Filtrer les lignes pour ne conserver que celles déjà annotées.
-        5) Selon le nombre d’annotateurs :
+        1) Lister les fichiers CSV dans 'data/processed/subset' et demander à l’utilisateur
+           de sélectionner celui souhaité.
+        2) Demander le nombre d’annotateurs.
+        3) Lire le CSV et stocker toutes les lignes dans une structure interne.
+        4) Demander quelles colonnes contiennent les annotations JSON ("_annotated" par ex.).
+           Puis demander quelles colonnes de métadonnées doivent être intégrées.
+        5) Créer un fichier de configuration Doccano avec tous les labels détectés,
+           suffixés par le nom de la colonne qui les contenait.
+        6) Filtrer les lignes pour ne conserver que celles déjà annotées (avec au moins un thème).
+        7) Selon le nombre d’annotateurs :
            - Si 1 annotateur : toutes les données annotées sont utilisées (aucun découpage).
            - Si > 1 annotateurs : effectuer un découpage 20 % commun / 80 % unique.
-        6) Répartir les données uniques équitablement entre les annotateurs s’ils sont
+        8) Répartir les données uniques équitablement entre les annotateurs s’ils sont
            plusieurs.
-        7) Générer les fichiers JSONL (un par annotateur) avec la répartition adéquate.
-        8) Afficher un résumé statistique des ensembles d'annotation.
+        9) Générer les fichiers JSONL (un par annotateur) avec la répartition adéquate,
+           en incluant les métadonnées choisies.
+        10) Afficher un résumé statistique des ensembles d'annotation dans le terminal
+            et enregistrer ces statistiques dans un fichier CSV de log.
     """
     # --------------------------------------------------------------------------
     # Définition de la seed en dur pour la reproductibilité
@@ -69,15 +110,39 @@ def main():
     random.seed(seed_value)
 
     # --------------------------------------------------------------------------
-    # 1. Demander les entrées utilisateur : chemin du CSV et nombre d'annotateurs
+    # 1. Lister les fichiers CSV dans 'data/processed/subset' et demander à
+    #    l'utilisateur de sélectionner celui souhaité
     # --------------------------------------------------------------------------
-    csv_file_path = input("Entrez le chemin du fichier CSV : ").strip()
-    while not os.path.isfile(csv_file_path):
-        print(f"Erreur : Le fichier '{csv_file_path}' n'existe pas.")
-        csv_file_path = input("Entrez un chemin valide pour le fichier CSV : ").strip()
+    subset_dir = "data/processed/subset"
+    if not os.path.isdir(subset_dir):
+        print(f"Erreur : Le répertoire '{subset_dir}' est introuvable.")
+        return
 
+    available_files = [f for f in os.listdir(subset_dir) if f.lower().endswith(".csv")]
+    if not available_files:
+        print(f"Aucun fichier CSV trouvé dans '{subset_dir}'.")
+        return
+
+    print("Fichiers CSV disponibles dans 'data/processed/subset' :")
+    for idx, fname in enumerate(available_files, start=1):
+        print(f"  {idx}. {fname}")
+
+    file_choice = input("Sélectionnez un fichier CSV en entrant son numéro : ").strip()
     try:
-        num_annotators = int(input("Entrez le nombre d'annotateurs (entier) : ").strip())
+        file_index = int(file_choice) - 1
+        if file_index < 0 or file_index >= len(available_files):
+            raise IndexError
+    except (ValueError, IndexError):
+        print("Erreur : choix de fichier invalide.")
+        return
+
+    csv_file_path = os.path.join(subset_dir, available_files[file_index])
+
+    # --------------------------------------------------------------------------
+    # 2. Demander le nombre d'annotateurs
+    # --------------------------------------------------------------------------
+    try:
+        num_annotators = int(input("Entrez le nombre d'annotateurs (entier positif) : ").strip())
         if num_annotators <= 0:
             raise ValueError
     except ValueError:
@@ -85,12 +150,16 @@ def main():
         return
 
     # --------------------------------------------------------------------------
-    # 2. Lecture du CSV et préparation des données
+    # 3. Lecture du CSV et préparation des données
     # --------------------------------------------------------------------------
     data_rows = []
     with open(csv_file_path, mode="r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         headers = reader.fieldnames  # Pour lister les colonnes disponibles
+        if not headers:
+            print("Erreur : Impossible de lire les en-têtes du CSV.")
+            return
+
         for row in reader:
             data_rows.append(row)
 
@@ -99,14 +168,14 @@ def main():
         return
 
     # --------------------------------------------------------------------------
-    # Affichage des colonnes disponibles et demande de sélection
+    # Affichage des colonnes disponibles et demande de sélection (annotations)
     # --------------------------------------------------------------------------
-    print("Colonnes disponibles dans le CSV :")
+    print("\nColonnes disponibles dans le CSV :")
     for h in headers:
         print(f"  - {h}")
 
     annotation_cols_input = input(
-        "Entrez les colonnes contenant les annotations JSON (séparées par des virgules) : "
+        "\nEntrez les colonnes contenant les annotations JSON (séparées par des virgules) : "
     ).strip()
 
     # Filtrer pour ne garder que les colonnes valides
@@ -123,36 +192,55 @@ def main():
         return
 
     # --------------------------------------------------------------------------
-    # 3. Filtrer les lignes pour ne conserver que celles déjà annotées
+    # Demande de sélection des colonnes de métadonnées à inclure
+    # --------------------------------------------------------------------------
+    print("\nColonnes disponibles (rappel) :")
+    for h in headers:
+        print(f"  - {h}")
+
+    metadata_cols_input = input(
+        "\nEntrez les colonnes que vous souhaitez inclure comme métadonnées "
+        "(séparées par des virgules), ou laissez vide pour n'en inclure aucune : "
+    ).strip()
+
+    if metadata_cols_input:
+        selected_metadata_cols = [
+            col.strip() for col in metadata_cols_input.split(",")
+            if col.strip() in headers
+        ]
+    else:
+        selected_metadata_cols = []
+
+    # --------------------------------------------------------------------------
+    # 4. Filtrer les lignes pour ne conserver que celles déjà annotées
+    #    (avec des thèmes valides)
     # --------------------------------------------------------------------------
     total_initial = len(data_rows)
     filtered_rows = []
+
     for row in data_rows:
-        ligne_annotée = False
+        ligne_annotee = False
         for col in selected_annotation_cols:
             value = row.get(col, "").strip()
             if value:
-                try:
-                    ann_json = json.loads(value)
-                    # S'assurer que "themes" soit une liste (même si null dans le JSON)
-                    themes = ann_json.get("themes") or []
-                    if themes:  # Si la liste n'est pas vide, la ligne est annotée
-                        ligne_annotée = True
-                        break
-                except json.JSONDecodeError:
-                    continue
-        if ligne_annotée:
+                # Récupération et filtrage des thèmes
+                themes = parse_themes(value)
+                if themes:  # Si après filtrage il en reste, c'est annoté
+                    ligne_annotee = True
+                    break
+        if ligne_annotee:
             filtered_rows.append(row)
+
     data_rows = filtered_rows
 
     if not data_rows:
-        print("Aucune ligne annotée détectée dans le CSV pour les colonnes sélectionnées.")
+        print("Aucune ligne annotée (avec thèmes valides) détectée dans le CSV.")
         return
 
-    print(f"{len(data_rows)} lignes annotées détectées sur {total_initial} lignes totales.")
+    print(f"{len(data_rows)} lignes annotées détectées sur {total_initial} lignes totales.\n")
 
     # --------------------------------------------------------------------------
-    # 4. Répartition : Si plusieurs annotateurs, 20 % communes / 80 % uniques.
+    # 5. Répartition : Si plusieurs annotateurs, 20 % communes / 80 % uniques.
     #    Si un seul annotateur, toutes les données annotées sont utilisées.
     # --------------------------------------------------------------------------
     random.shuffle(data_rows)  # Mélange global
@@ -161,19 +249,19 @@ def main():
         # Un seul annotateur : aucune division
         common_data = data_rows  # Tout va à l'annotateur
         unique_data = []
-        print(f"\nUn seul annotateur : {len(common_data)} lignes seront utilisées sans découpage.")
+        print(f"Un seul annotateur : {len(common_data)} lignes seront utilisées sans découpage.")
     else:
         total_count = len(data_rows)
         common_count = int(0.2 * total_count)
         unique_count = total_count - common_count
 
         common_data = data_rows[:common_count]   # 20 %
-        unique_data = data_rows[common_count:]     # 80 %
-        print(f"\nPlusieurs annotateurs : {total_count} lignes annotées au total.")
+        unique_data = data_rows[common_count:]   # 80 %
+        print(f"Plusieurs annotateurs : {total_count} lignes annotées au total.")
         print(f"Répartition : {common_count} lignes communes / {unique_count} lignes uniques.")
 
     # --------------------------------------------------------------------------
-    # 5. Répartition des données uniques entre les annotateurs (si plusieurs)
+    # 6. Répartition des données uniques entre les annotateurs (si plusieurs)
     # --------------------------------------------------------------------------
     annotators_unique_data = []
     if num_annotators > 1:
@@ -184,32 +272,32 @@ def main():
             end_idx = start_idx + unique_count_per_annot
             annotators_unique_data.append(unique_data[start_idx:end_idx])
             start_idx = end_idx
+        # Si jamais la division n'est pas exacte, 
+        # il reste potentiellement un petit reliquat non distribué.
+        # On pourrait l'attribuer aléatoirement, mais on simplifie ici.
     else:
         annotators_unique_data = [[]]  # Cohérence pour un seul annotateur
 
     # --------------------------------------------------------------------------
-    # 6. Extraction de tous les labels à partir des colonnes JSON sélectionnées
+    # 7. Extraction de tous les labels à partir des colonnes JSON sélectionnées
+    #    (en tenant compte du filtrage appliqué par parse_themes).
     # --------------------------------------------------------------------------
     all_labels = set()
     for row in data_rows:
         for col in selected_annotation_cols:
-            try:
-                ann_json = json.loads(row.get(col, "{}"))
-                # Assurer que "themes" soit une liste (évite None)
-                themes = ann_json.get("themes") or []
+            value = row.get(col, "").strip()
+            if value:
+                themes = parse_themes(value)
                 for theme in themes:
-                    # Ex. "politics_body_annotated"
                     label_with_suffix = f"{theme}_{col}"
                     all_labels.add(label_with_suffix)
-            except json.JSONDecodeError:
-                # Ignorer les lignes mal formées
-                continue
 
     all_labels = sorted(all_labels)
 
     # --------------------------------------------------------------------------
-    # 7. Création du fichier de configuration des labels Doccano
+    # 8. Création du fichier de configuration des labels Doccano
     # --------------------------------------------------------------------------
+    # Stockage des résultats dans "data/processed/validation"
     output_dir = "data/processed/validation"
     os.makedirs(output_dir, exist_ok=True)
 
@@ -231,13 +319,13 @@ def main():
     with open(config_path, mode="w", encoding="utf-8") as cf:
         json.dump(config_json, cf, ensure_ascii=False, indent=2)
 
-    print(f"Fichier de configuration Doccano créé à : {config_path}")
+    print(f"\nFichier de configuration Doccano créé à : {config_path}")
 
     # --------------------------------------------------------------------------
-    # 8. Génération des fichiers JSONL (un par annotateur)
+    # 9. Génération des fichiers JSONL (un par annotateur), en incluant
+    #    les métadonnées sélectionnées
     # --------------------------------------------------------------------------
     annotators_file_paths = []
-
     if num_annotators == 1:
         # Un fichier unique
         file_path = os.path.join(output_dir, "annotator_1.jsonl")
@@ -247,16 +335,21 @@ def main():
             for row in common_data:
                 text = row.get("body", "")
                 row_labels = []
-                for col in selected_annotation_cols:
-                    try:
-                        ann_json = json.loads(row.get(col, "{}"))
-                        themes = ann_json.get("themes") or []
-                        for theme in themes:
-                            row_labels.append(f"{theme}_{col}")
-                    except json.JSONDecodeError:
-                        continue
 
-                doccano_line = {"text": text, "label": row_labels}
+                # Récupération des thèmes (filtrés)
+                for col in selected_annotation_cols:
+                    themes = parse_themes(row.get(col, "{}"))
+                    for theme in themes:
+                        row_labels.append(f"{theme}_{col}")
+
+                # Ajout des métadonnées
+                metadata_dict = {mcol: row.get(mcol, "") for mcol in selected_metadata_cols}
+
+                doccano_line = {
+                    "text": text,
+                    "label": row_labels,
+                    "metadata": metadata_dict
+                }
                 out_f.write(json.dumps(doccano_line, ensure_ascii=False) + "\n")
 
         annotators_file_paths.append(file_path)
@@ -268,7 +361,7 @@ def main():
             file_name = f"annotator_{annotator_id}.jsonl"
             file_path = os.path.join(output_dir, file_name)
 
-            # Combine 20 % communes + part unique
+            # Combiner les données communes et les données uniques pour cet annotateur
             combined_data = common_data + annotators_unique_data[i]
             random.shuffle(combined_data)
 
@@ -276,22 +369,27 @@ def main():
                 for row in combined_data:
                     text = row.get("body", "")
                     row_labels = []
-                    for col in selected_annotation_cols:
-                        try:
-                            ann_json = json.loads(row.get(col, "{}"))
-                            themes = ann_json.get("themes") or []
-                            for theme in themes:
-                                row_labels.append(f"{theme}_{col}")
-                        except json.JSONDecodeError:
-                            continue
 
-                    doccano_line = {"text": text, "label": row_labels}
+                    # Récupération des thèmes (filtrés)
+                    for col in selected_annotation_cols:
+                        themes = parse_themes(row.get(col, "{}"))
+                        for theme in themes:
+                            row_labels.append(f"{theme}_{col}")
+
+                    # Ajout des métadonnées
+                    metadata_dict = {mcol: row.get(mcol, "") for mcol in selected_metadata_cols}
+
+                    doccano_line = {
+                        "text": text,
+                        "label": row_labels,
+                        "metadata": metadata_dict
+                    }
                     out_f.write(json.dumps(doccano_line, ensure_ascii=False) + "\n")
 
             annotators_file_paths.append(file_path)
 
     # --------------------------------------------------------------------------
-    # 9. Résumé et statistiques dans le terminal
+    # 10. Résumé et statistiques : affichage dans le terminal + export CSV
     # --------------------------------------------------------------------------
     print("\n===== Résumé de la répartition =====")
     print(f"Nombre d'annotateurs : {num_annotators}")
@@ -299,13 +397,16 @@ def main():
     if num_annotators == 1:
         print(f"Nombre total de lignes utilisées : {len(common_data)}")
     else:
-        print(f"Nombre total de lignes annotées : {len(data_rows)}")
+        total_annotated = len(data_rows)
+        print(f"Nombre total de lignes annotées : {total_annotated}")
         print(f"Lignes communes (20 %) : {len(common_data)}")
         print(f"Lignes uniques (80 %) : {len(unique_data)}")
         print(f"Lignes uniques par annotateur (approx.) : {len(unique_data) // num_annotators}")
 
-    # Parcourir chaque fichier JSONL pour afficher le nombre total de phrases
-    # et la répartition des labels
+    # Préparation du contenu pour le CSV de distribution
+    distribution_rows = []
+    header_distribution = ["Annotateur", "Fichier JSONL", "Nombre total de phrases"] + all_labels
+
     for i, file_path in enumerate(annotators_file_paths, start=1):
         with open(file_path, mode="r", encoding="utf-8") as f_in:
             lines = f_in.readlines()
@@ -316,7 +417,6 @@ def main():
         for line in lines:
             record = json.loads(line)
             labels_list = record.get("label", [])
-
             for lbl in labels_list:
                 if lbl in label_counts:
                     label_counts[lbl] += 1
@@ -328,6 +428,20 @@ def main():
         for lbl, cnt in label_counts.items():
             print(f"    {lbl} : {cnt}")
 
+        # Pour le CSV
+        row_for_csv = [f"Annotateur_{i}", file_path, total_count] + [label_counts[lbl] for lbl in all_labels]
+        distribution_rows.append(row_for_csv)
+
+    # Enregistrement du CSV de distribution
+    distribution_csv_path = os.path.join(output_dir, "annotation_distribution_summary.csv")
+    with open(distribution_csv_path, mode="w", encoding="utf-8", newline="") as dist_csv:
+        writer = csv.writer(dist_csv, delimiter=",")
+        writer.writerow(header_distribution)
+        for row in distribution_rows:
+            writer.writerow(row)
+
+    print("\nUn rapport CSV de la distribution des annotations a été enregistré ici :")
+    print(f"  {distribution_csv_path}")
     print("\nLes fichiers JSONL et doccano_config.json se trouvent dans :")
     print(f"  {output_dir}")
 
