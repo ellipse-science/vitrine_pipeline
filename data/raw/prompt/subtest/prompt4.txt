@@ -11,9 +11,9 @@ La catégorie doit être claire et la valeur appropriée doit être utilisée :
 - Écrire exclusivement le JSON sans autre commentaire ou explication.  
 - Indiquer la catégorie si elle est présente.
 
-**Exemple d'annotation pour le titre :**
+**Exemple d'annotation de phrase :**
 
-During a Liberal cabinet retreat in Halifax last August, Prime Minister Justin Trudeau signalled a possible reduction in permanent resident levels, a major policy reversal for the federal government.
+The federal government has announced new measures to strengthen interprovincial relations and improve democratic transparency.
 
 **Exemple de JSON :**
 
