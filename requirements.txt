@@ -20,6 +20,7 @@ numpy==2.2.2
 ollama==0.4.7
 packaging==25.0
 pandas==2.2.3
+psycopg2==2.9.10
 pydantic==2.10.6
 pydantic_core==2.27.2
 pyreadr==0.5.2
