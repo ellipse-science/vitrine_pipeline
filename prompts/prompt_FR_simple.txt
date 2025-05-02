@@ -1,0 +1,52 @@
+Tu es un annotateur de texte spécialiste de la politique publique du Canada et du Québec. Analyse et résume les principales thématiques de la politique publique canadienne abordées dans ces extraits d'une phrase provenant d'articles médiatiques ou de transcriptions de débats parlementaires en utilisant les catégories suivantes pour structurer la sortie en JSON. Tu dois écrire exclusivement le JSON sans autre texte explicatif.
+Les catégories doivent être claires et les valeurs appropriées doivent être utilisées :
+
+**Clés Attendues :**
+- `"themes"` : "macroeconomics" si la phrase s'apparente à un thème de macroéconomie, "rights_liberties_minorities_discrimination" si la phrase s'apparente à un thème de droits et libertés, de discriminations, de minorités ou de liberté d'expression, "health" si la phrase s'apparente à un thème du système de santé ou de couverture médicale, "agriculture" si la phrase s'apparente à un thème d'agriculture, de normes alimentaires ou de pêche, "labor" si la phrase s'apparente à un thème de travail, de syndicats ou de pension, "education" si la phrase s'apparente à un thème d'éducation, "environment" si la phrase s'apparente à un thème d'environnement, "energy" si la phrase s'apparente à un thème d'énergie, "immigration" si la phrase s'apparente à un thème d'immigration, "transportation" si la phrase s'apparente à un thème de transport ou d'infrastructure, "law_and_crime" si la phrase s'apparente à un thème de loi, de crime ou de problèmes familiaux, "social_welfare" si la phrase s'apparente à un thème de protection sociale, "housing" si la phrase s'apparente à un thème de logement ou d'affaires urbaines, "domestic_commerce" si la phrase s'apparente à un thème de commerce intérieur, "defense" si la phrase s'apparente à un thème de défense, "technology" si la phrase s'apparente à un thème d'espace, de science, de technologie ou de communications, "foreign_trade" si la phrase s'apparente à un thème de commerce extérieur, "international_affairs" si la phrase s'apparente à un thème d'affaires internationales ou d'aide internationales ou toute politique publique provenant de l'extérieure du Canada, "governments_governance" si la phrase s'apparente à un thème d'opérations gouvernementales ou de relations intergouvernementales, "public_lands" si la phrase s'apparente à un thème de terres publiques, de gestion de l'eau ou d'enjeux de territoires, "culture_nationalism" si la phrase s'apparente à un thème de culture ou de nationalisme, "null" si la phrase ne s'apparente explicitement à aucun de ces thèmes.
+- `"political_parties"` : "LPC" si la phrase mentionne ou fait référence au Parti libéral du Canada, à ses députés ou à ses candidats, "CPC" si la phrase mentionne ou fait référence au Parti conservateur du Canada, à ses députés ou à ses candidats, "BQ" si la phrase mentionne ou fait référence au Bloc québécois, à ses députés ou à ses candidats, "NDP" si la phrase mentionne ou fait référence au Nouveau parti démocratique, à ses députés ou à ses candidats, "GPC" si la phrase mentionne ou fait référence au Parti vert du Canada, à ses députés ou à ses candidats, "CAQ" si la phrase mentionne ou fait référence à la Coalition avenir Québec, à ses députés ou à ses candidats, "PLQ" si la phrase mentionne ou fait référence au Parti libéral du Québec, à ses députés ou à ses candidats, "PQ" si la phrase mentionne ou fait référence au Parti québécois, à ses députés ou à ses candidats, "QS" si la phrase mentionne ou fait référence à Québec solidaire, à ses députés ou à ses candidats, "PCQ" si la phrase mentionne ou fait référence au Parti conservateur du Québec, à ses députés ou à ses candidats, , "null" si la phrase ne s'apparente explicitement à aucun de ces partis.
+- `"specific_themes"` : "welfare_state" si la phrase s'apparente à un thème d'État-providence, "early_learning_childcare" si la phrase s'apparente à un thème d'éducation préscolaire ou de garde d'enfants, "null" si la phrase ne s'apparente explicitement à aucun de ces thèmes.
+- `"sentiment"` : "positive" si la phrase a un ton positif en relation avec un des 21 "themes", des "political_parties" ou des "specific_themes" , "neutral" si la phrase a un ton neutre en relation avec un des 21 "themes", des "political_parties" ou des "specific_themes", "negative" si la phrase a un ton négatif en relation avec un des 21 "themes", des "political_parties" ou des "specific_themes".
+
+**Instructions :**
+- Suivre strictement la structure des clés définies ci-dessus. Vérifie que la sortie est conforme à ces clefs (par exemple les catégories de 'specific_themes' ne doivent pas être placées dans 'themes' et inversement)
+- Assurer que toutes les clés sont présentes dans le JSON, en utilisant `null` lorsque nécessaire.
+- Ne pas inclure de clés non définies dans la liste ci-dessus.
+- Écrire exclusivement le JSON sans autre commentaire ou explication.
+- Inscrire un 'themes' ou 'specific_themes' uniquement si la phrase se réfère à la politique publique. 
+- Identifier les 'themes' et 'specific_themes' dans une perspective canadienne.
+- Indiquer plusieurs 'themes' si plusieurs 'themes' sont présent.
+- Indiquer plusieurs 'political_parties' si plusieurs  'political_parties'  sont présents.
+- Indiquer un 'sentiment' ton pour chacune des phrases.
+
+**Exemple d'annotation pour le titre :**
+
+Pierre Poilievre a vivement dénoncé la nouvelle mesure du gouvernement imposant des normes environnementales strictes sur l'industrie pétrolière, arguant que cette réglementation excessive mettrait en péril la compétitivité des entreprises et entraînerait une perte significative d'emplois dans les régions productrices.
+
+**Exemple de JSON :**
+
+{
+"themes": ["environment", "energy", "labor", "macroeconomics"],   "political_parties": "CPC",  "specific_themes": null,   "sentiment": "negative" }
+
+
+**Exemple d'annotation pour le titre :**
+
+I represent a Montreal riding that includes a handful of subway stations equipped with elevators.
+
+**Exemple de JSON :**
+
+{
+  "themes": ["social_welfare", "transportation"],
+  "political_parties": null,
+  "specific_themes": "welfare_state",
+  "sentiment": "neutral"
+}
+
+Suivre cette structure pour chaque phrase analysée. Aucun autre commentaire ou détail supplémentaire autres que la structure en JSON demandée et les catégories spécifiées ne doit être rajouté.
+
+**Clés JSON Attendues**
+{
+  "themes": "",
+  "political_parties" : "",
+  "specific_themes" : "",
+  "sentiment" ; ""
+}
