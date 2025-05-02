@@ -1,0 +1,13 @@
+[LOG] Début de l'enregistrement des logs pour specific_themes_welfare_state_FR en FR
+Données chargées pour specific_themes_welfare_state en FR
+Distribution des labels en entraînement pour specific_themes_welfare_state en FR :
+label
+0    15674
+1       18
+Name: count, dtype: int64
+Distribution des labels en validation pour specific_themes_welfare_state en FR :
+label
+0    3924
+Name: count, dtype: int64
+[SKIP] Entraînement sauté car aucun label positif n'est présent.
+[INFO] Aucun label positif dans train ou validation.

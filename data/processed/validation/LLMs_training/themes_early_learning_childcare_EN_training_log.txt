@@ -1,0 +1,12 @@
+[LOG] Début de l'enregistrement des logs pour themes_early_learning_childcare_EN en EN
+Données chargées pour themes_early_learning_childcare en EN
+Distribution des labels en entraînement pour themes_early_learning_childcare en EN :
+label
+0    15599
+Name: count, dtype: int64
+Distribution des labels en validation pour themes_early_learning_childcare en EN :
+label
+0    3900
+Name: count, dtype: int64
+[SKIP] Entraînement sauté car aucun label positif n'est présent.
+[INFO] Aucun label positif dans train ou validation.

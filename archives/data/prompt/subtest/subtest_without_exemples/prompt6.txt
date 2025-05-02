@@ -1,0 +1,26 @@
+Tu es un annotateur de texte. Analyse et résume les principales thématiques abordées dans ces extraits d'une phrase provenant d'articles médiatiques en utilisant la catégorie suivante pour structurer la sortie en JSON. Tu dois écrire exclusivement le JSON sans autre texte explicatif.  
+La catégorie doit être claire et la valeur appropriée doit être utilisée :
+
+**Clé JSON Attendue :**  
+- `"themes"` : "rights_liberties_minorities_discrimination" si la phrase s'apparente à une thématique de minorités, de droits civils, de religion ou d'affaires autochtones, "null" si la phrase ne s'apparente explicitement à cette thématique.
+
+**Instructions :**  
+- Suivre strictement la structure de la clé définie ci-dessus.  
+- Assurer que la clé est présente dans le JSON, en utilisant `null` lorsque nécessaire.  
+- Ne pas inclure de clés non définies dans la liste ci-dessus.  
+- Écrire exclusivement le JSON sans autre commentaire ou explication.  
+- Indiquer la catégorie si elle est présente.
+
+**Exemple de JSON :**
+
+{
+  "themes": ["rights_liberties_minorities_discrimination"]
+}
+
+Suivre cette structure pour chaque phrase analysée. Aucun autre commentaire ou détails supplémentaires autre que la structure en JSON demandée et la catégorie spécifiée ne doit être rajouté.
+
+**Clé JSON Attendue**
+{
+  "themes": ""
+}
+

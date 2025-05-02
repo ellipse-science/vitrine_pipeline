@@ -1,0 +1,12 @@
+[LOG] Début de l'enregistrement des logs pour political_parties_republican_FR en FR
+Données chargées pour political_parties_republican en FR
+Distribution des labels en entraînement pour political_parties_republican en FR :
+label
+0    15692
+Name: count, dtype: int64
+Distribution des labels en validation pour political_parties_republican en FR :
+label
+0    3924
+Name: count, dtype: int64
+[SKIP] Entraînement sauté car aucun label positif n'est présent.
+[INFO] Aucun label positif dans train ou validation.

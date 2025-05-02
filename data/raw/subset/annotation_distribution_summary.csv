@@ -1,0 +1,10 @@
+Nombre total de lignes CSV,40000
+Nombre de lignes communes (20%),8000
+Nombre de lignes uniques (80%),32000
+
+Annotateur,Fichier JSONL,Nombre total de lignes,Dont lignes communes,Dont lignes uniques
+Annotateur_1,data/processed/validation/annotator_1.jsonl,14400,8000,6400
+Annotateur_2,data/processed/validation/annotator_2.jsonl,14400,8000,6400
+Annotateur_3,data/processed/validation/annotator_3.jsonl,14400,8000,6400
+Annotateur_4,data/processed/validation/annotator_4.jsonl,14400,8000,6400
+Annotateur_5,data/processed/validation/annotator_5.jsonl,14400,8000,6400

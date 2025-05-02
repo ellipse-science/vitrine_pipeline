@@ -1,0 +1,659 @@
+[LOG] Début de l'enregistrement des logs pour themes_health_EN en EN
+Données chargées pour themes_health en EN
+Distribution des labels en entraînement pour themes_health en EN :
+label
+0    15585
+1       14
+Name: count, dtype: int64
+Distribution des labels en validation pour themes_health en EN :
+label
+0    3897
+1       3
+Name: count, dtype: int64
+label ids: {0: 0, 1: 1}
+label ids: {0: 0, 1: 1}
+Encodage des données terminé.
+Sauvegarde du modèle dans : themes_health_EN.model
+
+======== Epoch 1 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:32.
+  Batch   320  of    488.    Elapsed: 0:05:11.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:28.
+  Batch   440  of    488.    Elapsed: 0:07:07.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.01
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 2 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:35.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:48.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:44.
+
+  Average training loss: 0.01
+  Training took: 0:07:51
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 3 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:44.
+
+  Average training loss: 0.01
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 4 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:44.
+
+  Average training loss: 0.01
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 5 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:35.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:44.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 6 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:32.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 7 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:32.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 8 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 9 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:19.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:32.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 10 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 11 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:32.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 12 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 13 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:32.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 14 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:44.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 15 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:19.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:32.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:28.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 16 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:19.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:32.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 17 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:44.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 18 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:32.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:45.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 19 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:44.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+======== Epoch 20 / 20 ========
+Training...
+  Batch    40  of    488.    Elapsed: 0:00:40.
+  Batch    80  of    488.    Elapsed: 0:01:18.
+  Batch   120  of    488.    Elapsed: 0:01:57.
+  Batch   160  of    488.    Elapsed: 0:02:36.
+  Batch   200  of    488.    Elapsed: 0:03:14.
+  Batch   240  of    488.    Elapsed: 0:03:53.
+  Batch   280  of    488.    Elapsed: 0:04:31.
+  Batch   320  of    488.    Elapsed: 0:05:10.
+  Batch   360  of    488.    Elapsed: 0:05:49.
+  Batch   400  of    488.    Elapsed: 0:06:27.
+  Batch   440  of    488.    Elapsed: 0:07:06.
+  Batch   480  of    488.    Elapsed: 0:07:44.
+
+  Average training loss: 0.00
+  Training took: 0:07:52
+
+Running Validation...
+
+  Average test loss: 0.01
+  Validation took: 0:00:10
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      3897
+           1       0.00      0.00      0.00         3
+
+    accuracy                           1.00      3900
+   macro avg       0.50      0.50      0.50      3900
+weighted avg       1.00      1.00      1.00      3900
+
+
+Training complete!
+Entraînement terminé pour themes_health_EN

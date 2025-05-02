@@ -1,0 +1,306 @@
+[
+  {
+    "id": 1000,
+    "text": "theme_law_and_crime",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1001,
+    "text": "theme_immigration",
+    "prefixKey": null,
+    "suffixKey": "1",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1002,
+    "text": "theme_technology",
+    "prefixKey": null,
+    "suffixKey": "2",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1003,
+    "text": "theme_macroeconomics",
+    "prefixKey": null,
+    "suffixKey": "3",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1004,
+    "text": "theme_labor",
+    "prefixKey": null,
+    "suffixKey": "4",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1005,
+    "text": "theme_transportation",
+    "prefixKey": null,
+    "suffixKey": "5",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1006,
+    "text": "theme_housing",
+    "prefixKey": null,
+    "suffixKey": "6",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1007,
+    "text": "theme_domestic_commerce",
+    "prefixKey": null,
+    "suffixKey": "7",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1008,
+    "text": "theme_foreign_trade",
+    "prefixKey": null,
+    "suffixKey": "8",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1009,
+    "text": "theme_public_lands",
+    "prefixKey": null,
+    "suffixKey": "9",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1010,
+    "text": "theme_agriculture",
+    "prefixKey": null,
+    "suffixKey": "a",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1011,
+    "text": "theme_environment",
+    "prefixKey": null,
+    "suffixKey": "b",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1012,
+    "text": "theme_energy",
+    "prefixKey": null,
+    "suffixKey": "c",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1013,
+    "text": "theme_international_affairs",
+    "prefixKey": null,
+    "suffixKey": "d",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1014,
+    "text": "theme_defense",
+    "prefixKey": null,
+    "suffixKey": "e",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1015,
+    "text": "theme_governments_governance",
+    "prefixKey": null,
+    "suffixKey": "f",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1016,
+    "text": "theme_culture_nationalism",
+    "prefixKey": null,
+    "suffixKey": "g",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1017,
+    "text": "theme_rights_liberties_minorities_discrimination",
+    "prefixKey": null,
+    "suffixKey": "h",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1018,
+    "text": "theme_education",
+    "prefixKey": null,
+    "suffixKey": "i",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1019,
+    "text": "theme_health",
+    "prefixKey": null,
+    "suffixKey": "j",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1020,
+    "text": "theme_social_welfare",
+    "prefixKey": null,
+    "suffixKey": "k",
+    "backgroundColor": "#FA8072",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1021,
+    "text": "specific_themes_welfare_state",
+    "prefixKey": null,
+    "suffixKey": "l",
+    "backgroundColor": "#87CEFA",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1022,
+    "text": "specific_themes_public_finance",
+    "prefixKey": null,
+    "suffixKey": "m",
+    "backgroundColor": "#87CEFA",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1023,
+    "text": "specific_themes_early_learning_childcare",
+    "prefixKey": null,
+    "suffixKey": "n",
+    "backgroundColor": "#87CEFA",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1024,
+    "text": "political_parties_LPC",
+    "prefixKey": null,
+    "suffixKey": "o",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1025,
+    "text": "political_parties_CPC",
+    "prefixKey": null,
+    "suffixKey": "p",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1026,
+    "text": "political_parties_BQ",
+    "prefixKey": null,
+    "suffixKey": "q",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1027,
+    "text": "political_parties_NDP",
+    "prefixKey": null,
+    "suffixKey": "r",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1028,
+    "text": "political_parties_GPC",
+    "prefixKey": null,
+    "suffixKey": "s",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1029,
+    "text": "political_parties_PPC",
+    "prefixKey": null,
+    "suffixKey": "t",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1030,
+    "text": "political_parties_CAQ",
+    "prefixKey": null,
+    "suffixKey": "u",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1031,
+    "text": "political_parties_PLQ",
+    "prefixKey": null,
+    "suffixKey": "v",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1032,
+    "text": "political_parties_PQ",
+    "prefixKey": null,
+    "suffixKey": "w",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1033,
+    "text": "political_parties_QS",
+    "prefixKey": null,
+    "suffixKey": "x",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1034,
+    "text": "political_parties_PCQ",
+    "prefixKey": null,
+    "suffixKey": "y",
+    "backgroundColor": "#90EE90",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1035,
+    "text": "sentiment_positive",
+    "prefixKey": null,
+    "suffixKey": "z",
+    "backgroundColor": "#FFFACD",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1036,
+    "text": "sentiment_negative",
+    "prefixKey": null,
+    "suffixKey": null,
+    "backgroundColor": "#FFFACD",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1037,
+    "text": "sentiment_neutral",
+    "prefixKey": null,
+    "suffixKey": null,
+    "backgroundColor": "#FFFACD",
+    "textColor": "#ffffff"
+  }
+]

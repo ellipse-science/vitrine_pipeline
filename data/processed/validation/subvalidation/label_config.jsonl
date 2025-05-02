@@ -1,0 +1,1202 @@
+[
+  {
+    "id": 1000,
+    "text": "political_parties_BQ_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C2C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1001,
+    "text": "political_parties_BQ_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C2C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1002,
+    "text": "political_parties_BQ_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C2C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1003,
+    "text": "political_parties_BQ_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C2C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1004,
+    "text": "political_parties_BQ_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C2C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1005,
+    "text": "political_parties_CPC_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D24A2C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1006,
+    "text": "political_parties_CPC_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D24A2C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1007,
+    "text": "political_parties_CPC_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D24A2C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1008,
+    "text": "political_parties_CPC_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D24A2C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1009,
+    "text": "political_parties_CPC_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D24A2C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1010,
+    "text": "political_parties_LPC_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2682C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1011,
+    "text": "political_parties_LPC_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2682C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1012,
+    "text": "political_parties_LPC_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2682C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1013,
+    "text": "political_parties_LPC_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2682C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1014,
+    "text": "political_parties_LPC_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2682C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1015,
+    "text": "political_parties_NDP_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2872C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1016,
+    "text": "political_parties_NDP_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2872C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1017,
+    "text": "political_parties_NDP_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2872C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1018,
+    "text": "political_parties_NDP_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2872C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1019,
+    "text": "political_parties_PCQ_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2A52C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1020,
+    "text": "political_parties_PLQ_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D2C32C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1021,
+    "text": "political_parties_QS_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#C3D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1022,
+    "text": "political_parties_QS_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#C3D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1023,
+    "text": "political_parties_QS_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#C3D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1024,
+    "text": "political_parties_QS_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#C3D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1025,
+    "text": "sentiment_negative_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#A5D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1026,
+    "text": "sentiment_negative_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#A5D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1027,
+    "text": "sentiment_negative_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#A5D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1028,
+    "text": "sentiment_negative_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#A5D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1029,
+    "text": "sentiment_negative_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#A5D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1030,
+    "text": "sentiment_neutral_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#87D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1031,
+    "text": "sentiment_neutral_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#87D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1032,
+    "text": "sentiment_neutral_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#87D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1033,
+    "text": "sentiment_neutral_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#87D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1034,
+    "text": "sentiment_neutral_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#87D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1035,
+    "text": "sentiment_positive_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#68D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1036,
+    "text": "sentiment_positive_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#68D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1037,
+    "text": "sentiment_positive_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#68D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1038,
+    "text": "sentiment_positive_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#68D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1039,
+    "text": "sentiment_positive_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#68D22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1040,
+    "text": "specific_themes_early_learning_childcare_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#4AD22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1041,
+    "text": "specific_themes_early_learning_childcare_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#4AD22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1042,
+    "text": "specific_themes_early_learning_childcare_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#4AD22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1043,
+    "text": "specific_themes_early_learning_childcare_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#4AD22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1044,
+    "text": "specific_themes_early_learning_childcare_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#4AD22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1045,
+    "text": "specific_themes_public_finance_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1046,
+    "text": "specific_themes_public_finance_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1047,
+    "text": "specific_themes_public_finance_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1048,
+    "text": "specific_themes_public_finance_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1049,
+    "text": "specific_themes_public_finance_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD22C",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1050,
+    "text": "specific_themes_welfare_state_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD24A",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1051,
+    "text": "specific_themes_welfare_state_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD24A",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1052,
+    "text": "specific_themes_welfare_state_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD24A",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1053,
+    "text": "specific_themes_welfare_state_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD24A",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1054,
+    "text": "specific_themes_welfare_state_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD24A",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1055,
+    "text": "theme_agriculture_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD268",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1056,
+    "text": "theme_agriculture_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD268",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1057,
+    "text": "theme_agriculture_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD268",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1058,
+    "text": "theme_agriculture_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD268",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1059,
+    "text": "theme_agriculture_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD268",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1060,
+    "text": "theme_culture_nationalism_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD287",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1061,
+    "text": "theme_culture_nationalism_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD287",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1062,
+    "text": "theme_culture_nationalism_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD287",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1063,
+    "text": "theme_culture_nationalism_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD287",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1064,
+    "text": "theme_defense_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD2A5",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1065,
+    "text": "theme_defense_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD2A5",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1066,
+    "text": "theme_defense_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD2A5",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1067,
+    "text": "theme_defense_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD2A5",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1068,
+    "text": "theme_defense_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD2A5",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1069,
+    "text": "theme_domestic_commerce_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD2C3",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1070,
+    "text": "theme_domestic_commerce_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD2C3",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1071,
+    "text": "theme_domestic_commerce_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD2C3",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1072,
+    "text": "theme_domestic_commerce_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD2C3",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1073,
+    "text": "theme_domestic_commerce_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CD2C3",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1074,
+    "text": "theme_education_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CC3D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1075,
+    "text": "theme_education_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CC3D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1076,
+    "text": "theme_energy_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CA5D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1077,
+    "text": "theme_energy_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CA5D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1078,
+    "text": "theme_energy_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CA5D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1079,
+    "text": "theme_energy_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CA5D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1080,
+    "text": "theme_energy_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2CA5D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1081,
+    "text": "theme_environment_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C87D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1082,
+    "text": "theme_environment_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C87D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1083,
+    "text": "theme_environment_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C87D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1084,
+    "text": "theme_environment_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C87D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1085,
+    "text": "theme_environment_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C87D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1086,
+    "text": "theme_foreign_trade_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C68D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1087,
+    "text": "theme_foreign_trade_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C68D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1088,
+    "text": "theme_foreign_trade_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C68D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1089,
+    "text": "theme_foreign_trade_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C68D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1090,
+    "text": "theme_foreign_trade_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C68D2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1091,
+    "text": "theme_governments_governance_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C4AD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1092,
+    "text": "theme_governments_governance_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C4AD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1093,
+    "text": "theme_governments_governance_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C4AD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1094,
+    "text": "theme_governments_governance_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C4AD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1095,
+    "text": "theme_governments_governance_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C4AD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1096,
+    "text": "theme_health_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C2CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1097,
+    "text": "theme_health_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C2CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1098,
+    "text": "theme_health_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C2CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1099,
+    "text": "theme_health_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C2CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1100,
+    "text": "theme_health_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#2C2CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1101,
+    "text": "theme_housing_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#4A2CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1102,
+    "text": "theme_housing_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#4A2CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1103,
+    "text": "theme_housing_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#4A2CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1104,
+    "text": "theme_housing_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#4A2CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1105,
+    "text": "theme_housing_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#4A2CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1106,
+    "text": "theme_international_affairs_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#682CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1107,
+    "text": "theme_international_affairs_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#682CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1108,
+    "text": "theme_international_affairs_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#682CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1109,
+    "text": "theme_international_affairs_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#682CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1110,
+    "text": "theme_international_affairs_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#682CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1111,
+    "text": "theme_labor_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#872CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1112,
+    "text": "theme_labor_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#872CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1113,
+    "text": "theme_labor_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#872CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1114,
+    "text": "theme_labor_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#872CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1115,
+    "text": "theme_labor_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#872CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1116,
+    "text": "theme_law_and_crime_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#A52CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1117,
+    "text": "theme_law_and_crime_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#A52CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1118,
+    "text": "theme_law_and_crime_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#A52CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1119,
+    "text": "theme_law_and_crime_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#A52CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1120,
+    "text": "theme_law_and_crime_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#A52CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1121,
+    "text": "theme_macroeconomics_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#C32CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1122,
+    "text": "theme_macroeconomics_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#C32CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1123,
+    "text": "theme_macroeconomics_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#C32CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1124,
+    "text": "theme_macroeconomics_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#C32CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1125,
+    "text": "theme_macroeconomics_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#C32CD2",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1126,
+    "text": "theme_public_lands_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22CC3",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1127,
+    "text": "theme_public_lands_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22CC3",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1128,
+    "text": "theme_public_lands_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22CC3",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1129,
+    "text": "theme_public_lands_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22CC3",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1130,
+    "text": "theme_public_lands_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22CC3",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1131,
+    "text": "theme_rights_liberties_minorities_discrimination_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22CA5",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1132,
+    "text": "theme_rights_liberties_minorities_discrimination_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22CA5",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1133,
+    "text": "theme_rights_liberties_minorities_discrimination_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22CA5",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1134,
+    "text": "theme_rights_liberties_minorities_discrimination_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22CA5",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1135,
+    "text": "theme_rights_liberties_minorities_discrimination_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22CA5",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1136,
+    "text": "theme_social_welfare_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C87",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1137,
+    "text": "theme_social_welfare_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C87",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1138,
+    "text": "theme_social_welfare_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C87",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1139,
+    "text": "theme_social_welfare_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C87",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1140,
+    "text": "theme_social_welfare_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C87",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1141,
+    "text": "theme_technology_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C68",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1142,
+    "text": "theme_technology_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C68",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1143,
+    "text": "theme_technology_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C68",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1144,
+    "text": "theme_technology_jeremy",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C68",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1145,
+    "text": "theme_technology_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C68",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1146,
+    "text": "theme_transportation_BenjaminCarignan",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C4A",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1147,
+    "text": "theme_transportation_antoine",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C4A",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1148,
+    "text": "theme_transportation_jdrouin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C4A",
+    "textColor": "#ffffff"
+  },
+  {
+    "id": 1149,
+    "text": "theme_transportation_shdin",
+    "prefixKey": null,
+    "suffixKey": "0",
+    "backgroundColor": "#D22C4A",
+    "textColor": "#ffffff"
+  }
+]

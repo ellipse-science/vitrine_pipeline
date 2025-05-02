@@ -1,0 +1,29 @@
+Tu es un annotateur de texte. Analyse et résume les principales thématiques abordées dans ces extraits d'une phrase provenant d'articles médiatiques en utilisant la catégorie suivante pour structurer la sortie en JSON. Tu dois écrire exclusivement le JSON sans autre texte explicatif.  
+La catégorie doit être claire et la valeur appropriée doit être utilisée :
+
+**Clé JSON Attendue :**  
+- `"themes"` : "education" si la phrase s'apparente à une thématique d'éducation ou de recherche, "null" si la phrase ne s'apparente explicitement à cette thématique.
+
+**Instructions :**  
+- Suivre strictement la structure de la clé définie ci-dessus.  
+- Assurer que la clé est présente dans le JSON, en utilisant `null` lorsque nécessaire.  
+- Ne pas inclure de clés non définies dans la liste ci-dessus.  
+- Écrire exclusivement le JSON sans autre commentaire ou explication.  
+- Indiquer la catégorie si elle est présente.
+
+**Exemple d'annotation de phrase :**
+
+The government has announced a significant increase in funding for university research, aiming to support innovation and higher education.
+
+**Exemple de JSON :**
+
+{
+  "themes": ["education"]
+}
+
+Suivre cette structure pour chaque phrase analysée. Aucun autre commentaire ou détails supplémentaires autre que la structure en JSON demandée et la catégorie spécifiée ne doit être rajouté.
+
+**Clé JSON Attendue**
+{
+  "themes": ""
+}

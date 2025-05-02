@@ -1,0 +1,16 @@
+file,label,gold_count,pred_count,precision,recall,f1
+JerGil.jsonl,culture_and_nationalism_body_annotated_deepseek_r1,21,12,0.4167,0.2381,0.303
+JerGil.jsonl,economy_and_labour_body_annotated_deepseek_r1,59,58,0.7241,0.7119,0.7179
+JerGil.jsonl,education_body_annotated_deepseek_r1,5,8,0.625,1.0,0.7692
+JerGil.jsonl,environment_and_energy_body_annotated_deepseek_r1,19,8,0.875,0.3684,0.5185
+JerGil.jsonl,governments_and_governance_body_annotated_deepseek_r1,73,121,0.4628,0.7671,0.5773
+JerGil.jsonl,health_and_social_services_body_annotated_deepseek_r1,24,26,0.7692,0.8333,0.8
+JerGil.jsonl,immigration_body_annotated_deepseek_r1,9,8,0.875,0.7778,0.8235
+JerGil.jsonl,international_affairs_and_defense_body_annotated_deepseek_r1,35,32,0.9375,0.8571,0.8955
+JerGil.jsonl,law_and_crime_body_annotated_deepseek_r1,51,50,0.76,0.7451,0.7525
+JerGil.jsonl,public_lands_and_agriculture_body_annotated_deepseek_r1,8,7,0.7143,0.625,0.6667
+JerGil.jsonl,rights_liberties_minorities_discrimination_body_annotated_deepseek_r1,23,13,0.7692,0.4348,0.5556
+JerGil.jsonl,technology_body_annotated_deepseek_r1,7,7,0.7143,0.7143,0.7143
+JerGil.jsonl,__micro__,,,0.6571,0.6886,0.6725
+JerGil.jsonl,__macro__,,,0.7203,0.6727,0.6745
+JerGil.jsonl,__subset_accuracy__,,,0.4525,,

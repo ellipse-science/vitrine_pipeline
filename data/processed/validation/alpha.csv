@@ -1,0 +1,41 @@
+Krippendorff’s Alpha - InterAnnotateurs
+JSONL sélectionnés :,data/processed/validation/annotated_jsonl/jeremy.jsonl,data/processed/validation/annotated_jsonl/shdin.jsonl,data/processed/validation/annotated_jsonl/antoine.jsonl
+
+Label,Alpha_label,jeremy_positif,jeremy_negatif,shdin_positif,shdin_negatif,antoine_positif,antoine_negatif
+political_parties_BQ,1.0,1,100,1,100,1,100
+political_parties_CPC,0.9606493506493506,9,92,10,91,9,92
+political_parties_LPC,0.8753599341834636,5,96,6,95,6,95
+political_parties_NDP,1.0,1,100,1,100,1,100
+political_parties_PCQ,-0.006644518272425293,2,99,0,101,0,101
+political_parties_PLQ,-0.0033112582781458233,0,101,1,100,0,101
+political_parties_QS,0.49667774086378735,1,100,1,100,0,101
+sentiment_negative,0.6560257923894288,45,56,41,60,35,66
+sentiment_neutral,0.5746622214423582,42,59,45,56,52,49
+sentiment_positive,0.5477611940298508,13,88,15,86,7,94
+specific_themes_early_learning_childcare,1.0,2,99,2,99,2,99
+specific_themes_public_finance,0.6569071497897121,8,93,9,92,5,96
+specific_themes_welfare_state,0.5807195571955719,11,90,14,87,7,94
+theme_agriculture,0.8537644787644787,2,99,2,99,3,98
+theme_culture_nationalism,0.49667774086378735,1,100,1,100,0,101
+theme_defense,1.0,1,100,1,100,1,100
+theme_domestic_commerce,0.7432203389830508,2,99,2,99,4,97
+theme_energy,0.7466555183946488,1,100,1,100,2,99
+theme_environment,1.0,1,100,1,100,1,100
+theme_foreign_trade,0.7895833333333333,5,96,5,96,5,96
+theme_governments_governance,0.8093380317140699,8,93,10,91,11,90
+theme_health,0.8588509316770186,8,93,7,94,8,93
+theme_housing,0.8680313588850175,5,96,6,95,5,96
+theme_international_affairs,0.8423845193508115,13,88,12,89,11,90
+theme_labor,0.795339412360689,8,93,8,93,5,96
+theme_law_and_crime,0.9464664310954064,6,95,7,94,7,94
+theme_macroeconomics,0.5671428571428571,11,90,10,91,7,94
+theme_public_lands,0.7466555183946488,1,100,2,99,1,100
+theme_rights_liberties_minorities_discrimination,0.811332503113325,3,98,5,96,3,98
+theme_social_welfare,0.5419501133786848,3,98,3,98,3,98
+theme_technology,0.7966442953020134,2,99,2,99,1,100
+theme_transportation,-0.013377926421404673,0,101,3,98,1,100
+
+__alpha_global__ (Krippendorff),0.7590401826381276
+__alpha_global__ sans sentiment (Krippendorff),0.7793199024648627
+__fleiss_kappa_global__,0.9694719468699959
+__fleiss_kappa_global__ sans sentiment,0.9824741092529276
