@@ -71,6 +71,7 @@ data/*.fst
 data/*.json
 data/*.sqlite
 data/*.db
+data/processed/subset/agora_ecpr.csv
 
 # Ignore .DS_Store files
 .DS_Store
