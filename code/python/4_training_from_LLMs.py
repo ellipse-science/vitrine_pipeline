@@ -18,7 +18,7 @@ pour gérer la logique des transformers. Il :
     3) Entraîne Camembert pour le français et BERT pour l’anglais avec 20 époques normales.
     4) Sauvegarde les logs pour chaque époque dans data/processed/validation/LLMs_training.
     5) Déclenche automatiquement un apprentissage renforcé (époques supplémentaires avec suréchantillonnage de la classe) si
-       le score F1 de la classe 1 est inférieur à 0,6 après l’entraînement normal.
+       le score F1 de la classe 1 est inférieur à 0,7 après l’entraînement normal.
     6) Implémente une logique de secours qui sélectionne la 5ᵉ époque renforcée si aucune époque renforcée
        ne dépasse 0 en F1 pour la classe 1 (càd reste à 0). Si une époque dépasse 0, la
        première de celles-ci est sélectionnée si elle apporte une amélioration du F1 de la classe 1.
@@ -309,7 +309,7 @@ def train_models() -> None:
     avec 20 époques normales via la bibliothèque AugmentedSocialScientistFork.
 
     Si le meilleur F1 de la classe 1 après l'entraînement normal est
-    inférieur à 0.6, l'apprentissage renforcé est déclenché automatiquement.
+    inférieur à 0.7, l'apprentissage renforcé est déclenché automatiquement.
     La logique de secours sélectionne la 5ᵉ époque renforcée si aucune
     n'améliore le F1 de la classe 1. Sinon, la première à apporter une amélioration est retenue.
 
