@@ -1,36 +1,29 @@
 """
 PROJECT:
 --------
-4_training_from_LLMs.py
+POLISCIENCE
 
-TITLE:
-------
-Entraînement de modèles spécialisés BERT à partir d’annotations de LLMs locaux
+FILE:
+-----
+2_training_from_LLMs.py
 
-OBJECTIF PRINCIPAL:
--------------------
-1. Demander à l'utilisateur de choisir, parmi les fichiers CSV disponibles dans 
-   "data/processed/subset", celui à utiliser pour l'entraînement.
-2. Une fois le fichier sélectionné, afficher les colonnes du CSV et demander à 
-   l'utilisateur de choisir celle contenant les annotations.
-3. Lire les annotations depuis le fichier sélectionné et, pour chaque clé présente 
-   dans la colonne d'annotations, détecter tous les labels (pour les valeurs de type 
-   liste ou valeur unique) et créer de façon générique des bases dichotomiques.
-   - Pour chaque couple (clé, label), chaque ligne produira une entrée JSONL de la forme :
-     {"text": "texte de l'article", "label": 1}   (label = 1 si le label est présent, 0 sinon)
-   - Les fichiers générés seront rangés dans une arborescence par langue et par couple, par exemple :
-     data/processed/training_LLMs/themes_international_affairs/train/EN/themes_international_affairs_train_EN.jsonl  
-     data/processed/training_LLMs/themes_international_affairs/validation/FR/themes_international_affairs_validation_FR.jsonl
-4. Procéder ensuite à l’entraînement en utilisant Camembert pour le français et Bert pour l’anglais,
-   avec des logs enregistrés dans "data/processed/validation/LLMs_training" et les modèles sauvegardés dans "models".
+DESCRIPTION:
+------------
+This script trains specialized BERT/Camembert models based on annotations produced by local LLMs,
+relying on the 'AugmentedSocialScientistFork' library to handle the core Transformer logic. It:
+    1) Interactively selects a CSV file and annotation column.
+    2) Creates binary train/validation JSONL datasets per annotation label (excluding 'null').
+    3) Trains Camembert for French and BERT for English with 20 normal epochs.
+    4) Saves logs for each epoch to data/processed/validation/LLMs_training.
+    5) Automatically triggers reinforced learning (extra epochs with class oversampling) if
+       the F1 score for class 1 is below 0.6 after normal training.
+    6) Implements rescue logic that selects the 5th reinforced epoch if no reinforced epoch
+       surpasses 0 in F1 for class 1 (i.e., remains at 0). If an epoch does surpass 0, the
+       first such epoch is selected if it yields any improvement in class 1 F1.
+    7) Aggregates final metrics in a single CSV (data/processed/validation/all_best_models.csv)
+       containing only the final model’s metrics for each trained label.
 
-Dépendances:
--------------
-- os, sys, json, glob, shutil, random  
-- pandas, torch  
-- AugmentedSocialScientist.models (pour Camembert et Bert)
-
-Auteur:
+AUTHOR:
 -------
 Antoine Lemor
 """
@@ -41,59 +34,118 @@ import json
 import glob
 import shutil
 import random
+import datetime
+import time
+import csv
+import numpy as np
 import pandas as pd
 import torch
 
-from AugmentedSocialScientist.models import Camembert, Bert
+from torch.types import Device
+from tqdm.auto import tqdm
+
+# Import the specialized library containing BERT/Camembert wrappers
+# that handle training, prediction, and reinforced learning logic.
+from AugmentedSocialScientistFork.models import Bert, Camembert
+
+# -----------------------------
+# REPLACE ABSOLUTE PATHS WITH RELATIVE PATHS
+# -----------------------------
+# We use base_path = "." to keep all paths relative and portable.
+base_path = "."
 
 # --------------------------------------------------------------------
-# FONCTION POUR DÉTECTER LE DEVICE (CUDA, MPS OU CPU)
+# DEVICE SELECTION
 # --------------------------------------------------------------------
-def get_device():
+def get_device() -> torch.device:
     """
-    Détecte une GPU (CUDA ou MPS) ou retourne le CPU.
-
-    Returns:
-        torch.device: le device à utiliser.
+    Detect available GPU (CUDA or MPS) or default to CPU.
+    
+    Returns
+    -------
+    torch.device
+        The selected device for training.
     """
     if torch.cuda.is_available():
         device = torch.device("cuda")
-        print("Utilisation du GPU (CUDA).")
+        print("Using GPU (CUDA).")
     elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
         device = torch.device("mps")
-        print("Utilisation du GPU (MPS).")
+        print("Using GPU (MPS).")
     else:
         device = torch.device("cpu")
-        print("Utilisation du CPU.")
+        print("Using CPU.")
     return device
 
+
 # --------------------------------------------------------------------
-# LOGGER SIMPLE POUR ENREGISTRER LES SORTIES
+# SIMPLE LOGGER
 # --------------------------------------------------------------------
-class Logger(object):
+class Logger:
     """
-    Logger redirigeant la sortie standard (stdout) vers un fichier et la console.
+    Logger that duplicates stdout to both console and a log file.
+
+    Attributes
+    ----------
+    terminal : file-like
+        Original stdout reference.
+    log : file-like
+        The file where logs are written.
     """
-    def __init__(self, filename):
+
+    def __init__(self, filename: str):
+        """
+        Initialize the logger.
+
+        Parameters
+        ----------
+        filename : str
+            The path to the file where logs will be written.
+        """
         self.terminal = sys.stdout
         self.log = open(filename, "w", encoding="utf-8")
 
-    def write(self, message):
+    def write(self, message: str) -> None:
+        """
+        Write a message to both stdout and the log file.
+
+        Parameters
+        ----------
+        message : str
+            The message to log.
+        """
         self.terminal.write(message)
         self.log.write(message)
 
-    def flush(self):
+    def flush(self) -> None:
+        """
+        Flush the log file. Required for some I/O libraries.
+        """
         pass
 
-    def close(self):
+    def close(self) -> None:
+        """
+        Close the log file.
+        """
         self.log.close()
 
+
 # --------------------------------------------------------------------
-# FONCTION POUR CHARGER UN FICHIER JSONL EN DATAFRAME
+# LOAD JSONL TO DATAFRAME
 # --------------------------------------------------------------------
-def load_jsonl_to_dataframe(filepath):
+def load_jsonl_to_dataframe(filepath: str) -> pd.DataFrame:
     """
-    Charge un fichier JSONL dans une DataFrame pandas.
+    Load a JSONL file into a pandas DataFrame.
+
+    Parameters
+    ----------
+    filepath : str
+        The path to the JSONL file.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing the JSONL data.
     """
     data = []
     with open(filepath, 'r', encoding='utf-8') as file:
@@ -102,373 +154,503 @@ def load_jsonl_to_dataframe(filepath):
     return pd.DataFrame(data)
 
 # --------------------------------------------------------------------
-# FONCTION DE CRÉATION DES BASES D'ENTRAÎNEMENT ET VALIDATION
+# CREATE TRAIN/VALIDATION DATASETS
 # --------------------------------------------------------------------
-def create_training_datasets(csv_path, annotation_column):
+def create_training_datasets(csv_path: str, annotation_column: str) -> None:
     """
-    1. Lit le CSV d'annotations sélectionné par l'utilisateur.
-    2. Analyse de façon générique la colonne choisie (contenant les annotations) pour détecter
-       l'ensemble des clés et de leurs labels présents.
-    3. Pour chaque couple (clé, label) et par langue (selon la colonne 'lang'),
-       crée une base dichotomique où la présence du label vaut 1, l'absence 0.
-    4. Réalise un split train/validation (80/20 par défaut) et écrit les fichiers JSONL dans l'arborescence :
-       data/processed/training_LLMs/{clé}_{label}/train/{LANG}/{clé}_{label}_train_{LANG}.jsonl
-       data/processed/training_LLMs/{clé}_{label}/validation/{LANG}/{clé}_{label}_validation_{LANG}.jsonl
+    Build binary JSONL datasets.
+    label = 1  → row contains the (key, label) pair
+    label = 0  → row has *any* annotation but not this pair
+    No row is added if the annotation cell is empty/null.
     """
-    # Définition des chemins (en tenant compte que ce script est dans code/python)
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    output_base = os.path.join(base_path, "..", "..", "data", "processed", "training_LLMs")
+    output_base = os.path.join(base_path, "data", "processed", "training_LLMs")
 
-    # Lecture du CSV sélectionné
-    try:
-        df = pd.read_csv(csv_path)
-        print(f"CSV chargé depuis {csv_path}")
-    except Exception as e:
-        print(f"Erreur lors de la lecture du CSV: {e}")
-        sys.exit(1)
+    # ── 1. Lecture du CSV ────────────────────────────────────────────
+    df = pd.read_csv(csv_path)
+    print(f"Loaded {len(df):,} rows from {csv_path}")
 
-    # Première passe : collecte des labels candidats pour chaque clé
-    candidate_labels = {}  # dict: clé -> set(labels)
-    for idx, row in df.iterrows():
+    # ── 2. Recensement des labels possibles par key ──────────────────
+    candidate_labels: dict[str, set[str]] = {}
+    for annot in df[annotation_column].dropna():
         try:
-            annotations = json.loads(row.get(annotation_column, "{}"))
-        except Exception as e:
-            annotations = {}
-        for key, value in annotations.items():
-            if value is None:
+            d = json.loads(annot)
+        except Exception:
+            continue
+        for k, v in d.items():
+            if v in (None, [], "", "null"):
                 continue
-            # Si la valeur est une liste, ajouter chaque élément
-            if isinstance(value, list):
-                for lab in value:
-                    if lab is not None:
-                        candidate_labels.setdefault(key, set()).add(lab)
+            if isinstance(v, list):
+                candidate_labels.setdefault(k, set()).update(
+                    {lab for lab in v if str(lab).lower() != "null"}
+                )
             else:
-                candidate_labels.setdefault(key, set()).add(value)
+                if str(v).lower() != "null":
+                    candidate_labels.setdefault(k, set()).add(v)
 
-    # Préparation des données par couple (clé, label) et par langue
-    data_by_pair = {}  # dict: pair_name -> dict(lang -> list of examples)
-    for idx, row in df.iterrows():
-        lang = str(row.get("lang", "")).strip().upper()
-        text = row.get("text", "").strip()
+    # ── 3. Construction des exemples ────────────────────────────────
+    data_by_pair: dict[str, dict[str, list[dict]]] = {}
+    for _, row in df.iterrows():
         try:
             annotations = json.loads(row.get(annotation_column, "{}"))
         except Exception:
-            annotations = {}
-        # Pour chaque clé détectée globalement
-        for key, labs in candidate_labels.items():
-            row_value = annotations.get(key, None)
-            for lab in labs:
-                pair_name = f"{key}_{lab}"
-                pair_name = pair_name.lower().replace(" ", "_")
-                if row_value is None:
-                    binary_label = 0
+            continue  # annotation malformed ⇒ skip
+        if not annotations:                # pas d'annotation ⇒ aucun exemple
+            continue
+
+        lang = str(row.get("lang", "")).strip().upper()
+        text = str(row.get("text", "")).strip()
+
+        for key, labels in candidate_labels.items():
+            row_val = annotations.get(key)
+            for lab in labels:
+                if isinstance(row_val, list):
+                    is_positive = lab in row_val
                 else:
-                    if isinstance(row_value, list):
-                        binary_label = 1 if lab in row_value else 0
-                    else:
-                        binary_label = 1 if row_value == lab else 0
-                if pair_name not in data_by_pair:
-                    data_by_pair[pair_name] = {}
-                if lang not in data_by_pair[pair_name]:
-                    data_by_pair[pair_name][lang] = []
-                data_by_pair[pair_name][lang].append({"text": text, "label": binary_label})
+                    is_positive = row_val == lab
 
-    # Split train/validation et écriture des fichiers JSONL
-    split_ratio = 0.8  # 80% training, 20% validation
-    random.seed(42)  # pour reproductibilité
+                pair = f"{key}_{lab}".lower().replace(" ", "_")
+                data_by_pair \
+                    .setdefault(pair, {}) \
+                    .setdefault(lang, []) \
+                    .append({"text": text, "label": 1 if is_positive else 0})
 
-    for pair_name, lang_dict in data_by_pair.items():
-        for lang, examples in lang_dict.items():
+    # ── 4. Split 80/20 et sauvegarde ────────────────────────────────
+    split_ratio = 0.8
+    random.seed(42)
+    for pair, langs in data_by_pair.items():
+        for lang, examples in langs.items():
             if not examples:
                 continue
             random.shuffle(examples)
-            split_index = int(len(examples) * split_ratio) if len(examples) > 1 else len(examples)
-            train_examples = examples[:split_index]
-            val_examples = examples[split_index:]
-            train_dir = os.path.join(output_base, pair_name, "train", lang)
-            val_dir = os.path.join(output_base, pair_name, "validation", lang)
+            idx = int(len(examples) * split_ratio)
+            train_ex, val_ex = examples[:idx], examples[idx:]
+
+            train_dir = os.path.join(output_base, pair, "train", lang)
+            val_dir   = os.path.join(output_base, pair, "validation", lang)
             os.makedirs(train_dir, exist_ok=True)
             os.makedirs(val_dir, exist_ok=True)
-            train_file = os.path.join(train_dir, f"{pair_name}_train_{lang}.jsonl")
-            val_file = os.path.join(val_dir, f"{pair_name}_validation_{lang}.jsonl")
-            with open(train_file, "w", encoding="utf-8") as f_train:
-                for ex in train_examples:
-                    f_train.write(json.dumps(ex, ensure_ascii=False) + "\n")
-            with open(val_file, "w", encoding="utf-8") as f_val:
-                for ex in val_examples:
-                    f_val.write(json.dumps(ex, ensure_ascii=False) + "\n")
-            print(f"Création de {train_file} ({len(train_examples)} exemples) et {val_file} ({len(val_examples)} exemples).")
+
+            with open(os.path.join(train_dir, f"{pair}_train_{lang}.jsonl"), "w", encoding="utf-8") as f:
+                for ex in train_ex:
+                    f.write(json.dumps(ex, ensure_ascii=False) + "\n")
+            with open(os.path.join(val_dir, f"{pair}_validation_{lang}.jsonl"), "w", encoding="utf-8") as f:
+                for ex in val_ex:
+                    f.write(json.dumps(ex, ensure_ascii=False) + "\n")
+
+            print(f"[{pair} | {lang}] → {len(train_ex):,} train / {len(val_ex):,} val")
 
 # --------------------------------------------------------------------
-# FONCTION POUR DÉTERMINER LES FICHIERS REQUIS EN FONCTION DE LA LANGUE
+# REQUIRED MODEL FILES PER LANGUAGE
 # --------------------------------------------------------------------
-def get_required_files_for_language(language: str):
+def get_required_files_for_language(language: str) -> list[str]:
     """
-    Retourne la liste des fichiers nécessaires pour un modèle selon la langue.
+    Return a list of required model files based on language.
+    For French Camembert, 'sentencepiece.bpe.model' is needed,
+    for English BERT, 'vocab.txt' is needed.
+
+    Parameters
+    ----------
+    language : str
+        Language code ('FR' or 'EN'/others).
+
+    Returns
+    -------
+    list[str]
+        Filenames required for the model (config.json, pytorch_model.bin, plus a vocab file).
     """
     if language == "FR":
         return ["config.json", "pytorch_model.bin", "sentencepiece.bpe.model"]
-    else:
-        return ["config.json", "pytorch_model.bin", "vocab.txt"]
+    return ["config.json", "pytorch_model.bin", "vocab.txt"]
+
 
 # --------------------------------------------------------------------
-# FONCTION POUR COMPTER LES FICHIERS MODÈLES DANS UN RÉPERTOIRE
+# COUNT MODEL FILES IN DIRECTORY
 # --------------------------------------------------------------------
-def get_model_file_count(model_dir, language):
+def get_model_file_count(model_dir: str, language: str) -> int:
     """
-    Compte le nombre de fichiers requis présents dans 'model_dir'.
+    Count how many of the required files are present in a model directory.
+
+    Parameters
+    ----------
+    model_dir : str
+        Path to the model directory.
+    language : str
+        Language code.
+
+    Returns
+    -------
+    int
+        Number of required files found.
     """
-    required_files = get_required_files_for_language(language)
-    present_count = 0
+    required = get_required_files_for_language(language)
     if not os.path.exists(model_dir):
         return 0
-    for file_name in required_files:
-        if os.path.exists(os.path.join(model_dir, file_name)):
-            present_count += 1
-    return present_count
+    return sum(1 for fname in required if os.path.exists(os.path.join(model_dir, fname)))
+
 
 # --------------------------------------------------------------------
-# EXCEPTION PERSONNALISÉE POUR PASSER L'ENTRAÎNEMENT
+# CUSTOM EXCEPTION TO SKIP TRAINING
 # --------------------------------------------------------------------
 class SkipTrainingException(Exception):
     """
-    Exception personnalisée indiquant que l’entraînement doit être sauté.
+    Exception indicating that training should be skipped due to no positive labels.
     """
     pass
 
-# --------------------------------------------------------------------
-# FONCTION PRINCIPALE D'ENTRAÎNEMENT DES MODÈLES
-# --------------------------------------------------------------------
-def train_models():
-    """
-    Parcourt les bases d'entraînement générées, détecte pour chaque couple (clé, label) et langue 
-    les fichiers train et validation, puis lance la procédure d'entraînement (en instanciant Camembert ou Bert).
-    
-    Les logs sont enregistrés dans "data/processed/validation/LLMs_training/".
-    Les modèles sont sauvegardés dans le dossier "models" à la racine.
-    """
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    annotation_base_dir = os.path.join(base_path, "..", "..", "data", "processed", "training_LLMs")
-    model_output_dir = os.path.join(base_path, "..", "..", "models")
-    log_output_dir = os.path.join(base_path, "..", "..", "data", "processed", "validation", "LLMs_training")
-    training_data_dir = os.path.join(base_path, "..", "..", "data", "processed", "training_LLMs")
-    
-    os.makedirs(log_output_dir, exist_ok=True)
-    os.makedirs(model_output_dir, exist_ok=True)
-    
-    fully_trained_count = 0
-    partial_count = 0
-    not_started_count = 0
-    skipped_count = 0
-    non_trained_models = []
 
-    pair_dirs = [d for d in os.listdir(annotation_base_dir) if os.path.isdir(os.path.join(annotation_base_dir, d))]
-    
-    for pair in pair_dirs:
-        pair_path = os.path.join(annotation_base_dir, pair)
-        lang_dirs = []
-        train_path = os.path.join(pair_path, "train")
-        if os.path.exists(train_path):
-            lang_dirs = os.listdir(train_path)
-        for lang in lang_dirs:
-            train_filepath_pattern = os.path.join(pair_path, "train", lang, f"*train*_{lang}.jsonl")
-            val_filepath_pattern = os.path.join(pair_path, "validation", lang, f"*validation*_{lang}.jsonl")
-            train_files = glob.glob(train_filepath_pattern)
-            val_files = glob.glob(val_filepath_pattern)
+# --------------------------------------------------------------------
+# TRAIN MODELS
+# --------------------------------------------------------------------
+def train_models() -> None:
+    """
+    Iterate over generated train/validation datasets, instantiate the appropriate model
+    (Camembert for FR, BERT for EN), and run training with 20 normal epochs via the
+    AugmentedSocialScientistFork library. Logs and model outputs are saved in
+    data/processed/validation/LLMs_training.
+
+    If the best F1 for class 1 after normal training is below 0.6, the library's reinforced
+    learning is automatically triggered. The rescue logic is also leveraged: if no epoch
+    of reinforced training surpasses 0 in class 1 F1 (when the normal training had class 1 F1=0),
+    the 5th epoch is forcibly selected. Otherwise, the first epoch that surpasses 0 is selected
+    as the new best if it yields an improvement.
+
+    Finally, a single CSV file data/processed/validation/all_best_models.csv is created/updated
+    containing only the metrics of each final selected model for each label pair.
+    """
+    annotation_base = os.path.join(base_path, 'data', 'processed', 'training_LLMs')
+    model_output = os.path.join(base_path, 'models')
+    log_output = os.path.join(base_path, 'data', 'processed', 'validation', 'LLMs_training')
+    os.makedirs(log_output, exist_ok=True)
+    os.makedirs(model_output, exist_ok=True)
+
+    all_best_csv = os.path.join(base_path, 'data', 'processed', 'validation', 'LLMs_training', 'all_best_models.csv')
+    # Create CSV headers if not existing
+    if not os.path.exists(all_best_csv):
+        with open(all_best_csv, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow([
+                "epoch", "train_loss", "val_loss",
+                "precision_0", "recall_0", "f1_0", "support_0",
+                "precision_1", "recall_1", "f1_1", "support_1",
+                "macro_f1", "saved_model_path", "training_phase"
+            ])
+
+    non_trained = []
+    counts = {'fully': 0, 'partial': 0, 'not_started': 0, 'skipped': 0}
+
+    # For each label pair and language subfolder
+    for pair in os.listdir(annotation_base):
+        pair_path = os.path.join(annotation_base, pair)
+        train_root = os.path.join(pair_path, 'train')
+        if not os.path.isdir(train_root):
+            continue
+
+        for lang in os.listdir(train_root):
+            # Find train/validation JSONL files
+            train_files = glob.glob(os.path.join(pair_path, 'train', lang, f"*train*_{lang}.jsonl"))
+            val_files = glob.glob(os.path.join(pair_path, 'validation', lang, f"*validation*_{lang}.jsonl"))
             if not train_files or not val_files:
                 continue
 
             for train_file in train_files:
-                model_name = os.path.basename(train_file).replace('_train_', '_').replace(".jsonl", "")
-                model_dir = os.path.join(model_output_dir, f"{model_name}.model")
+                model_name = os.path.basename(train_file).replace('_train_', '_').replace('.jsonl', '')
+                model_dir = os.path.join(model_output, f"{model_name}.model")
                 file_count = get_model_file_count(model_dir, lang)
-                required_count = len(get_required_files_for_language(lang))
-                if file_count == required_count:
-                    status = "fully_trained"
-                    fully_trained_count += 1
-                elif file_count == 0:
-                    status = "not_started"
-                    not_started_count += 1
-                else:
-                    status = "partial"
-                    partial_count += 1
+                needed = len(get_required_files_for_language(lang))
 
-                base_name = os.path.basename(train_file).replace('_train_', '_validation_')
-                matching_val_file = None
-                for val_file in val_files:
-                    if base_name in val_file:
-                        matching_val_file = val_file
-                        break
-                if not matching_val_file:
+                if file_count == needed:
+                    counts['fully'] += 1
+                elif file_count == 0:
+                    counts['not_started'] += 1
+                else:
+                    counts['partial'] += 1
+
+                # Find matching validation file
+                base_val = os.path.basename(train_file).replace('_train_', '_validation_')
+                val_file = next((v for v in val_files if base_val in v), None)
+                if not val_file:
                     continue
 
-                print(f"[TRAIN] Début de l'entraînement pour {pair} | Langue: {lang} -> {model_name}")
-
+                print(f"[TRAIN] Starting training for {pair} | Lang: {lang} -> {model_name}")
                 device = get_device()
-                if lang == "FR":
-                    print("Instanciation du modèle Camembert pour le français.")
-                    model = Camembert(device=device)
+
+                # Select Camembert (FR) or BERT (others/EN)
+                if lang == 'FR':
+                    print("Instantiating Camembert for French.")
+                    model_wrapper = Camembert(model_name="camembert-base", device=device)
                 else:
-                    print("Instanciation du modèle Bert pour l'anglais.")
-                    model = Bert(device=device)
-                try:
-                    model.to(device)
-                except AttributeError:
-                    print("Attention : La méthode .to(device) n'est pas supportée par ce modèle.")
+                    print("Instantiating BERT for English.")
+                    model_wrapper = Bert(model_name="bert-base-cased", device=device)
 
-                log_filepath = os.path.join(log_output_dir, f"{model_name}_training_log.txt")
-                print(f"Configuration des logs dans : {log_filepath}")
-                logger = Logger(log_filepath)
+                # Logging to a dedicated file
+                log_file = os.path.join(log_output, f"{model_name}_training_log.txt")
+                logger = Logger(log_file)
                 sys.stdout = logger
-                print(f"[LOG] Début de l'enregistrement des logs pour {model_name} en {lang}")
-
-                scores = None
-                train_label_counts = None
-                val_label_counts = None
+                print(f"[LOG] Logging to {log_file}")
 
                 try:
-                    train_data = load_jsonl_to_dataframe(train_file)
-                    val_data = load_jsonl_to_dataframe(matching_val_file)
-                    print(f"Données chargées pour {pair} en {lang}")
-                    if train_data.empty or val_data.empty:
-                        print(f"Données vides pour {pair} en {lang}")
-                        raise ValueError("Données d'entraînement ou de validation vides")
-                    
-                    train_label_counts = train_data['label'].value_counts()
-                    val_label_counts = val_data['label'].value_counts()
-                    print(f"Distribution des labels en entraînement pour {pair} en {lang} :")
-                    print(train_label_counts)
-                    print(f"Distribution des labels en validation pour {pair} en {lang} :")
-                    print(val_label_counts)
+                    # Load train/validation data
+                    train_df = load_jsonl_to_dataframe(train_file)
+                    val_df = load_jsonl_to_dataframe(val_file)
+                    if train_df.empty or val_df.empty:
+                        raise ValueError("Empty train or validation data")
 
-                    if not (train_data['label'] > 0).any() or not (val_data['label'] > 0).any():
-                        print("[SKIP] Entraînement sauté car aucun label positif n'est présent.")
-                        skipped_count += 1
-                        raise SkipTrainingException("Aucun label positif dans train ou validation.")
-                    
-                    min_annotations = 1
-                    if len(train_data) < min_annotations or len(val_data) < min_annotations:
-                        print(f"Annotations insuffisantes pour {pair} en {lang}.")
-                        raise ValueError("Annotations insuffisantes")
-                    
-                    train_loader = model.encode(
-                        train_data.text.values,
-                        train_data.label.values.astype(int)
+                    # Check for presence of positive labels
+                    train_counts = train_df['label'].value_counts()
+                    val_counts = val_df['label'].value_counts()
+                    print("Label distribution in training:", train_counts.to_dict())
+                    print("Label distribution in validation:", val_counts.to_dict())
+
+                    if not (train_df['label'] > 0).any() or not (val_df['label'] > 0).any():
+                        counts['skipped'] += 1
+                        raise SkipTrainingException("No positive labels present.")
+
+                    # Encode data using the library's method
+                    train_loader = model_wrapper.encode(
+                        train_df.text.values, 
+                        train_df.label.values.astype(int)
                     )
-                    val_loader = model.encode(
-                        val_data.text.values,
-                        val_data.label.values.astype(int)
+                    val_loader = model_wrapper.encode(
+                        val_df.text.values, 
+                        val_df.label.values.astype(int)
                     )
-                    print("Encodage des données terminé.")
 
-                    relative_model_output_path = f"{model_name}.model"
-                    print(f"Sauvegarde du modèle dans : {relative_model_output_path}")
+                    # We store logs in a subfolder specific to this model
+                    sub_metrics_dir = os.path.join(log_output, model_name)
+                    os.makedirs(sub_metrics_dir, exist_ok=True)
 
-                    scores = model.run_training(
-                        train_loader,
-                        val_loader,
+                    # Run training with 20 normal epochs, then automatically handle RL if needed
+                    # Use 'run_training' from the library with the relevant parameters
+                    result_scores = model_wrapper.run_training(
+                        train_dataloader=train_loader,
+                        test_dataloader=val_loader,
+                        n_epochs=20,               # 20 normal epochs
                         lr=5e-5,
-                        n_epochs=20,
                         random_state=42,
-                        save_model_as=relative_model_output_path
+                        save_model_as=model_name,  # final model folder name
+                        pos_weight=None,           # if we want weighting from the start, set here
+                        metrics_output_dir=sub_metrics_dir,
+                        best_model_criteria="combined",
+                        f1_class_1_weight=0.9,     # place heavier emphasis on class 1 F1
+                        reinforced_learning=True,  # let the library run extra epochs if needed
+                        n_epochs_reinforced=5,     # do 5 RL epochs if triggered
+                        rescue_low_class1_f1=True, # if best normal F1(class1)=0, any improvement is captured
+                        f1_1_rescue_threshold=0.0
                     )
-                    print(f"Entraînement terminé pour {model_name}")
+                    # result_scores is (precision, recall, f1, support) from final best model
+
+                    print(f"Training completed for {model_name}. Final scores: {result_scores}")
+
+                    # Parse the final best model's metrics from the library's CSV logs.
+                    # The library writes each best model (normal or RL) to best_models.csv
+                    # in sub_metrics_dir. The last entry in that file is the final best.
+                    best_model_csv = os.path.join(sub_metrics_dir, "best_models.csv")
+                    final_epoch = None
+                    final_train_loss = None
+                    final_val_loss = None
+                    final_prec0 = None
+                    final_rec0 = None
+                    final_f10 = None
+                    final_sup0 = None
+                    final_prec1 = None
+                    final_rec1 = None
+                    final_f11 = None
+                    final_sup1 = None
+                    final_macro_f1 = None
+                    final_phase = None
+                    final_path = None
+
+                    if os.path.exists(best_model_csv):
+                        with open(best_model_csv, 'r', encoding='utf-8') as f:
+                            csv_reader = csv.DictReader(f)
+                            rows = list(csv_reader)
+                            if rows:
+                                last_row = rows[-1]
+                                final_epoch = last_row["epoch"]
+                                final_train_loss = last_row["train_loss"]
+                                final_val_loss = last_row["val_loss"]
+                                final_prec0 = last_row["precision_0"]
+                                final_rec0 = last_row["recall_0"]
+                                final_f10 = last_row["f1_0"]
+                                final_sup0 = last_row["support_0"]
+                                final_prec1 = last_row["precision_1"]
+                                final_rec1 = last_row["recall_1"]
+                                final_f11 = last_row["f1_1"]
+                                final_sup1 = last_row["support_1"]
+                                final_macro_f1 = last_row["macro_f1"]
+                                final_phase = last_row["training_phase"]
+                                final_path = last_row["saved_model_path"]
+
+                    # In some edge cases, the library might not pick an improved RL epoch if
+                    # no improvement is found. However, the original requirement:
+                    # "If no epoch in RL surpasses 0 in class 1 F1, forcibly pick epoch 5"
+                    # We'll handle that post-hoc by checking reinforced logs if needed.
+                    # -------------
+                    # The library already attempts rescue, but does NOT forcibly pick the last epoch if
+                    # there's no improvement above 0. So let's do that check if needed:
+                    # -------------
+                    forced_pick = False
+                    if final_phase == "reinforced" and final_f11 and float(final_f11) == 0.0:
+                        # Means we ended up with RL, but class1 F1 is still 0. 
+                        # The original script forcibly picks the 5th RL epoch if it never improved.
+                        # We'll see if the library actually saved an epoch 5 folder. If not, we do so manually.
+                        # Summaries of RL are in reinforced_training_metrics.csv. We can parse it:
+                        reinforced_csv = os.path.join(sub_metrics_dir, "reinforced_training_metrics.csv")
+                        if os.path.exists(reinforced_csv):
+                            with open(reinforced_csv, 'r', encoding='utf-8') as f:
+                                r_reader = csv.DictReader(f)
+                                epochs_rl = list(r_reader)
+                                # Check if any overcame 0
+                                overcame_zero = any(float(r["f1_1"]) > 0.0 for r in epochs_rl)
+                                if not overcame_zero:
+                                    # forcibly pick 5th epoch
+                                    # If there are fewer than 5 RL epochs, pick the last
+                                    total_rl = len(epochs_rl)
+                                    forced_epoch = min(5, total_rl)
+                                    # We'll unify this with the library's naming scheme 
+                                    forced_path = f"./models/{model_name}_reinforced_epoch_{forced_epoch}"
+                                    if not os.path.exists(forced_path):
+                                        # Possibly library never saved it (since it wasn't 'best'). 
+                                        # We'll note it, but can't do much else unless we re-run training for epoch 5 
+                                        print("[FORCE PICK LOGIC] No forced epoch path found on disk. Using normal best.")
+                                    else:
+                                        # We rename forced_path to final 
+                                        final_path_renamed = f"./models/{model_name}"
+                                        if os.path.exists(final_path_renamed):
+                                            shutil.rmtree(final_path_renamed)
+                                        os.rename(forced_path, final_path_renamed)
+                                        final_path = final_path_renamed
+                                        forced_pick = True
+                                        print(f"[FORCE PICK LOGIC] Forcing RL epoch {forced_epoch} as final model.")
+                    
+                    # If we forcibly picked epoch 5, let's parse its metrics from reinforced_training_metrics.csv
+                    if forced_pick:
+                        # Re-read that forced epoch's row
+                        reinforced_csv = os.path.join(sub_metrics_dir, "reinforced_training_metrics.csv")
+                        if os.path.exists(reinforced_csv):
+                            with open(reinforced_csv, 'r', encoding='utf-8') as f:
+                                r_reader = csv.DictReader(f)
+                                forced_rows = [r for r in r_reader]
+                                # last line might be 5 if 5 RL epochs exist
+                                # but we need the one that specifically is the forced_epoch
+                                # for simplicity, we can pick forced_epoch-1 index if the CSV is in order:
+                                # but let's do a direct filter
+                                forced_epoch_data = None
+                                total_rl = len(forced_rows)
+                                forced_epoch_value = min(5, total_rl)
+                                for row in forced_rows:
+                                    if row["epoch"] == str(forced_epoch_value):
+                                        forced_epoch_data = row
+                                        break
+                                if forced_epoch_data:
+                                    final_epoch = forced_epoch_data["epoch"]
+                                    final_train_loss = forced_epoch_data["train_loss"]
+                                    final_val_loss = forced_epoch_data["val_loss"]
+                                    final_prec0 = forced_epoch_data["precision_0"]
+                                    final_rec0 = forced_epoch_data["recall_0"]
+                                    final_f10 = forced_epoch_data["f1_0"]
+                                    final_sup0 = forced_epoch_data["support_0"]
+                                    final_prec1 = forced_epoch_data["precision_1"]
+                                    final_rec1 = forced_epoch_data["recall_1"]
+                                    final_f11 = forced_epoch_data["f1_1"]
+                                    final_sup1 = forced_epoch_data["support_1"]
+                                    final_macro_f1 = forced_epoch_data["macro_f1"]
+                                    final_phase = "reinforced_forced_epoch5"
+
+                    # Write final row to all_best_models.csv
+                    with open(all_best_csv, 'a', newline='', encoding='utf-8') as f:
+                        writer = csv.writer(f)
+                        writer.writerow([
+                            final_epoch,
+                            final_train_loss,
+                            final_val_loss,
+                            final_prec0, final_rec0, final_f10, final_sup0,
+                            final_prec1, final_rec1, final_f11, final_sup1,
+                            final_macro_f1,
+                            final_path if final_path else "No final model",
+                            final_phase if final_phase else "unknown"
+                        ])
+
                 except SkipTrainingException as ste:
-                    print(f"[INFO] {ste}")
-                    non_trained_models.append({
-                        "model_name": model_name,
-                        "train_distribution": train_label_counts.to_dict() if train_label_counts is not None else {},
-                        "val_distribution": val_label_counts.to_dict() if val_label_counts is not None else {}
-                    })
+                    print(f"[SKIP] {ste}")
+                    non_trained.append({'model': model_name, 'reason': str(ste)})
+                    # If partial artifacts exist, remove them
                     if os.path.exists(model_dir):
                         shutil.rmtree(model_dir, ignore_errors=True)
-                        print(f"Répertoire supprimé pour le modèle non entraîné: {model_dir}")
                 except Exception as e:
-                    print(f"Erreur lors de l'entraînement pour {model_name}: {e}")
-                    non_trained_models.append({
-                        "model_name": model_name,
-                        "train_distribution": train_label_counts.to_dict() if train_label_counts is not None else {},
-                        "val_distribution": val_label_counts.to_dict() if val_label_counts is not None else {}
-                    })
+                    print(f"[ERROR] Training failed for {model_name}: {e}")
+                    non_trained.append({'model': model_name, 'reason': str(e)})
                     if os.path.exists(model_dir):
                         shutil.rmtree(model_dir, ignore_errors=True)
-                        print(f"Répertoire supprimé pour le modèle non entraîné: {model_dir}")
                 finally:
+                    # Restore stdout and close logger
                     sys.stdout = sys.__stdout__
                     logger.close()
-                    print(f"[LOG] Fin des logs pour {model_name} en {lang}")
-                
-                if scores is not None:
-                    print(f"[TRAIN] Entraînement complété pour {model_name}, scores: {scores}")
-                else:
-                    if train_label_counts is not None and val_label_counts is not None:
-                        print(f"[TRAIN] Entraînement sauté ou échoué pour {model_name} (voir logs).")
-                    else:
-                        print(f"[TRAIN] Entraînement non démarré pour {model_name} (aucune donnée ou exception).")
-    
-    if non_trained_models:
-        non_trained_csv_path = os.path.join(training_data_dir, "non_trained_models.csv")
-        df_non_trained = pd.DataFrame(non_trained_models)
-        df_non_trained.to_csv(non_trained_csv_path, index=False, encoding='utf-8')
-        print(f"[INFO] non_trained_models.csv créé à : {non_trained_csv_path}")
 
-    print("===== RÉSUMÉ FINAL =====")
-    print(f"Modèles entièrement entraînés : {fully_trained_count}")
-    print(f"Modèles non démarrés : {not_started_count}")
-    print(f"Modèles partiellement entraînés : {partial_count}")
-    print(f"Modèles sautés (aucun label positif) : {skipped_count}")
-    print("================================")
+    # Save summary of non-trained models
+    if non_trained:
+        summary_path = os.path.join(annotation_base, 'non_trained_models.csv')
+        pd.DataFrame(non_trained).to_csv(summary_path, index=False, encoding='utf-8')
+        print(f"Non-trained models summary saved to {summary_path}")
+
+    # Print final summary
+    print("===== FINAL SUMMARY =====")
+    print(f"Fully trained models: {counts['fully']}")
+    print(f"Not started: {counts['not_started']}")
+    print(f"Partially trained: {counts['partial']}")
+    print(f"Skipped (no positives): {counts['skipped']}")
+    print("=========================")
+
 
 # --------------------------------------------------------------------
-# POINT D'ENTRÉE PRINCIPALE
+# MAIN
 # --------------------------------------------------------------------
 if __name__ == "__main__":
-    # 1. Sélection interactive du fichier CSV dans data/processed/subset
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    subset_dir = os.path.join(base_path, "..", "..", "data", "processed", "subset")
-    csv_files = [f for f in os.listdir(subset_dir) if f.endswith(".csv")]
+    """
+    Interactive entry point that:
+      1) Lists available CSV files in data/processed/subset.
+      2) Prompts user to select one and specify the annotation column.
+      3) Generates train/validation datasets (create_training_datasets).
+      4) Launches the training logic (train_models).
+    """
+    subset_dir = os.path.join(base_path, 'data', 'processed', 'subset')
+    csv_files = [f for f in os.listdir(subset_dir) if f.endswith('.csv')]
     if not csv_files:
-        print("Aucun fichier CSV trouvé dans", subset_dir)
+        print(f"No CSV files found in {subset_dir}")
         sys.exit(1)
-    print("Fichiers CSV disponibles dans", subset_dir, ":")
-    for idx, csvf in enumerate(csv_files):
-        print(f"{idx + 1} - {csvf}")
-    choice = input("Veuillez choisir le numéro du fichier CSV à utiliser: ")
-    try:
-        choice_idx = int(choice) - 1
-        if choice_idx < 0 or choice_idx >= len(csv_files):
-            print("Choix invalide.")
-            sys.exit(1)
-    except Exception as e:
-        print("Erreur lors de la sélection.")
-        sys.exit(1)
-    selected_csv_file = os.path.join(subset_dir, csv_files[choice_idx])
-    print("Fichier sélectionné :", selected_csv_file)
 
-    # 2. Sélection interactive de la colonne contenant les annotations
+    print(f"Available CSV files in {subset_dir}:")
+    for idx, fname in enumerate(csv_files, 1):
+        print(f"{idx} - {fname}")
+    choice = input("Select the number of the CSV file to use: ")
     try:
-        df_temp = pd.read_csv(selected_csv_file, nrows=0)
-        columns = list(df_temp.columns)
-    except Exception as e:
-        print("Erreur lors de la lecture du fichier CSV:", e)
+        idx = int(choice) - 1
+        selected = csv_files[idx]
+    except Exception:
+        print("Invalid choice.")
         sys.exit(1)
-    print("Colonnes disponibles dans le fichier CSV:")
-    for idx, col in enumerate(columns):
-        print(f"{idx + 1} - {col}")
-    col_choice = input("Veuillez choisir le numéro de la colonne à utiliser pour les annotations: ")
-    try:
-        col_choice_idx = int(col_choice) - 1
-        if col_choice_idx < 0 or col_choice_idx >= len(columns):
-            print("Choix invalide.")
-            sys.exit(1)
-    except Exception as e:
-        print("Erreur lors de la sélection de colonne.")
-        sys.exit(1)
-    annotation_column = columns[col_choice_idx]
-    print("Colonne sélectionnée pour les annotations :", annotation_column)
+    csv_path = os.path.join(subset_dir, selected)
+    print(f"Selected file: {csv_path}")
 
-    print("=== Création des bases d'entraînement ===")
-    create_training_datasets(selected_csv_file, annotation_column)
-    print("=== Lancement de l'entraînement des modèles ===")
+    # Select annotation column
+    try:
+        cols = pd.read_csv(csv_path, nrows=0).columns.tolist()
+    except Exception as e:
+        print(f"Error reading CSV columns: {e}")
+        sys.exit(1)
+    print("Available columns:")
+    for idx, col in enumerate(cols, 1):
+        print(f"{idx} - {col}")
+    col_choice = input("Select the annotation column number: ")
+    try:
+        annotation_col = cols[int(col_choice) - 1]
+    except Exception:
+        print("Invalid column selection.")
+        sys.exit(1)
+    print(f"Using annotation column: {annotation_col}")
+
+    print("=== Generating training datasets ===")
+    create_training_datasets(csv_path, annotation_col)
+    print("=== Starting model training ===")
     train_models()
-    print("=== Script terminé ===")
+    print("=== Script completed ===")
