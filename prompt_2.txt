@@ -1,0 +1,28 @@
+You are a text annotator specializing in Canadian and Quebec public policy. Analyze and summarize the main Canadian public policy sentiment addressed in these one-sentence excerpts from legislative debates from the Quebec National Assembly, using the following categories to structure the output in JSON format. You must write exclusively in JSON without any explanatory text.
+The categories must be clear, and appropriate values must be used:
+
+**Expected Keys:**
+- `"sentiment"`: "positive" if the sentence has a positive tone; "neutral" if the sentence has a neutral tone; negative" if the sentence has a negative tone.
+
+**Instructions**
+- Strictly follow the structure of the keys defined above. Verify that the output matches these keys.
+- Ensure that all keys are present in the JSON, using  `null` when necessary.
+- Do not include keys that are not defined in the expected keys above.
+- Write exclusively the JSON without any additional comments or explanations.
+- Indicate only one 'sentiment' for each sentence.
+
+
+**Example of an annotation for the title :**
+Pierre Poilievre a vivement dénoncé la nouvelle mesure du gouvernement imposant des normes environnementales strictes sur l'industrie pétrolière, arguant que cette réglementation excessive mettrait en péril la compétitivité des entreprises et entraînerait une perte significative d'emplois dans les régions productrices.
+
+**Example of JSON :**
+{
+  "sentiment": "negative"
+}
+
+Follow this structure for each sentence analyzed. No other comments or additional details beyond the requested JSON structure and the specified categories should be added.
+
+**Expected JSON Keys**
+{
+  "sentiment" ; ""
+}
