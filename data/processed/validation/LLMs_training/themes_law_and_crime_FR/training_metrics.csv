@@ -1,1 +1,0 @@
-epoch,train_loss,val_loss,precision_0,recall_0,f1_0,support_0,precision_1,recall_1,f1_1,support_1,macro_f1
