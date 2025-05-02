@@ -205,6 +205,7 @@ def pick_devices_interactively() -> List[str]:
           print("[WARN] Choix invalide, utilisation du CPU uniquement par défaut.")
           choice = "1"
 
+     #choix 1 : tous les CPU
      if choice == "1" or not gpu_available:
           return ["cpu"] * max_workers 
 
@@ -213,7 +214,7 @@ def pick_devices_interactively() -> List[str]:
           # Le reste peut être CPU si nous voulions la concurrence, mais interprétons "GPU uniquement" strictement :
           return ["cuda"] * min(max_workers, 1) if torch.cuda.is_available() else ["mps"] * min(max_workers, 1)
 
-     else:  # choice == "3"
+     else:  # choix == "3"
           # CPU et GPU
           devices = []
           gpu_name = "cuda" if torch.cuda.is_available() else "mps"
