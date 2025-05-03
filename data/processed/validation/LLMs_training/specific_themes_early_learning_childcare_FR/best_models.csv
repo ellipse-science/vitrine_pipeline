@@ -1,1 +1,3 @@
 epoch,train_loss,val_loss,precision_0,recall_0,f1_0,support_0,precision_1,recall_1,f1_1,support_1,macro_f1,saved_model_path,training_phase
+1,0.2676330577759516,0.11764113480846088,0.9753086419753086,1.0,0.9875,158.0,0.0,0.0,0.0,4.0,0.49375,./models/specific_themes_early_learning_childcare_FR_epoch_1,normal
+5,0.8130005327138033,0.5224685569604238,0.9807692307692307,0.9683544303797469,0.9745222929936306,158.0,0.16666666666666666,0.25,0.2,4.0,0.5872611464968153,./models/specific_themes_early_learning_childcare_FR_reinforced_epoch_5,reinforced

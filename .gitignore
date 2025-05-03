@@ -85,3 +85,4 @@ data/processed/subset/donnée_1995-2025.csv
 data/processed/subset/donnée_tokenized_1995-2025.csv
 code/python/4_training_from_LLMs.py
 code/python/4-1_compile_annotation_logs_LLMs.py
+vitrine_pipeline/data/processed/subset/agora_ecpr.csv

@@ -425,7 +425,7 @@ def train_models() -> None:
                         best_model_criteria="combined",
                         f1_class_1_weight=0.9,
                         reinforced_learning=True,
-                        n_epochs_reinforced=5,
+                        n_epochs_reinforced=20,
                         rescue_low_class1_f1=True,
                         f1_1_rescue_threshold=0.0
                     )

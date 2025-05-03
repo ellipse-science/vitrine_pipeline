@@ -1,15 +1,9 @@
 model,reason
-specific_themes_welfare_state_FR,"MPS backend out of memory (MPS allocated: 17.81 GB, other allocations: 333.22 MB, max allowed: 18.13 GB). Tried to allocate 149.25 MB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure)."
 specific_themes_welfare_state_EN,Aucune étiquette positive présente.
-themes_housing_FR,"MPS backend out of memory (MPS allocated: 17.75 GB, other allocations: 371.22 MB, max allowed: 18.13 GB). Tried to allocate 37.31 MB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure)."
 themes_housing_EN,Aucune étiquette positive présente.
 themes_health_EN,Aucune étiquette positive présente.
-specific_themes_early_learning_childcare_FR,"MPS backend out of memory (MPS allocated: 17.49 GB, other allocations: 524.17 MB, max allowed: 18.13 GB). Tried to allocate 232.04 MB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure)."
 specific_themes_early_learning_childcare_EN,Aucune étiquette positive présente.
-sentiment_negative_FR,"MPS backend out of memory (MPS allocated: 17.49 GB, other allocations: 524.17 MB, max allowed: 18.13 GB). Tried to allocate 149.25 MB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure)."
 sentiment_negative_EN,Aucune étiquette positive présente.
-sentiment_neutral_FR,"MPS backend out of memory (MPS allocated: 17.42 GB, other allocations: 524.17 MB, max allowed: 18.13 GB). Tried to allocate 232.04 MB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure)."
 sentiment_neutral_EN,Aucune étiquette positive présente.
-sentiment_positive_FR,"MPS backend out of memory (MPS allocated: 17.59 GB, other allocations: 524.17 MB, max allowed: 18.13 GB). Tried to allocate 58.01 MB on private pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure)."
 sentiment_positive_EN,Aucune étiquette positive présente.
 themes_social_welfare_EN,Aucune étiquette positive présente.
